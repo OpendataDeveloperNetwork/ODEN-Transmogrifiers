@@ -1,5 +1,7 @@
-const filter = function (data) {
-    data = JSON.parse(data);
+const filter = function (data, stringify) {
+    if (typeof data === 'string' || data instanceof String) {
+        data = JSON.parse(data);
+    }
     
     let new_data = [];
 
@@ -17,6 +19,10 @@ const filter = function (data) {
         new_data.push(item);
     })
 
-    return JSON.stringify(new_data, null);
+    if (stringify) {
+        return JSON.stringify(new_data, null);
+    }
+
+    return new_data;
 }
 return filter;
