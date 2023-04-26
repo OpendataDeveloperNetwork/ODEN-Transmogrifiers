@@ -7,7 +7,7 @@ const filter = function (data, stringify) {
 
   data.map((d) => {
     let item = {};
-    item.name = d.name_of_eligible_organization;
+    item.name = d.list_title;
     if (item.name === undefined) {
       console.log(`Data name not found for art with url ${d.url}`);
     }
@@ -31,5 +31,14 @@ const filter = function (data, stringify) {
 
   return new_data;
 };
+
+fetch("https://data.cambridgema.gov/resource/p4zn-aid4.json") // your dataset json
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(filter(data));
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 return filter;
