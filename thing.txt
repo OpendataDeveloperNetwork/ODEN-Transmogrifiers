@@ -1,0 +1,5 @@
+https://data.hampton.gov/data.json
+https://data.norfolk.gov/data.json
+https://data.richmondgov.com/data.json
+https://data.vbgov.com/data.json
+https://data-burlingtonvt.opendata.arcgis.com/data.json
