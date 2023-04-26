@@ -5,18 +5,22 @@ const filter = function (data, stringify) {
     
     let new_data = [];
 
-    data.map(d => {
+    data.features.map(d => {
         let item = {};
-        item.name = d.title_of_work;
+        item.name = d.properties.name;
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.geo_point_2d?.lon, latitude: d.geo_point_2d?.lat };
+        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1] };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
         item.coordinates = coordinates;
-        new_data.push(item);
+
+
+        let details = {name: d.properties.name, artist: d.properties.artist, location: d.properties.location, type: d.properties.type, urbantrail: d.properties.urbantrail};
+        item.details = details;
+        
     })
 
     if (stringify) {
