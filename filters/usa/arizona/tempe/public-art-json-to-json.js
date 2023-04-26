@@ -9,11 +9,11 @@ const filter = function (data, stringify) {
         let item = {};
         item.name = d.Name;
         if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+            console.log(`Data name not found for art with ID ${d.OBJECTID}`);
         }
         let coordinates = { longitude: d.Longitude, latitude: d.Latitude };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+            console.log(`Data coordinates not found for art with ID ${d.OBJECTID}`);
         }
         item.coordinates = coordinates;
 
