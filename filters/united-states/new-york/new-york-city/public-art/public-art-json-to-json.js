@@ -17,21 +17,21 @@ const filter = function (data, stringify) {
         }
         item.coordinates = coordinates;
 
-		item.details = {
-			date_created : d.date_created,
-			artwork_type1 : d.artwork_type1,
-			artwork_type2 : d.artwork_type2,
-			material : d.material,
-			location_name : d.location_name,
-			address : d.address,
-			city : d.city,
-			state : d.state,
-			zip_code : d.zip_code,
-			borough : d.borough,
-			subject_keyword : d.subject_keyword,
-			inscription : d.inscription,
-			acquisition : d.acquisition
-		}
+	item.details = {
+		date_created : d.date_created,
+		artwork_type1 : d.artwork_type1,
+		artwork_type2 : d.artwork_type2,
+		material : d.material,
+		location_name : d.location_name,
+		address : d.address,
+		city : d.city,
+		state : d.state,
+		zip_code : d.zip_code,
+		borough : d.borough,
+		subject_keyword : d.subject_keyword,
+		inscription : d.inscription,
+		acquisition : d.acquisition
+	}
         new_data.push(item);
     })
 
