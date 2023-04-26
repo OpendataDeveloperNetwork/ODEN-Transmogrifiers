@@ -1,17 +1,15 @@
-const filter = function(data) {
-    let new_data = [];
-    data = JSON.parse(data);
+let new_data = [];
+data = JSON.parse(data);
 
-    // pull schema?
-    
-    data.map(d => {
-        let item = {};
-        item.name = d.title_of_work;
-        item.location = d.geo_point_2d;
-        new_data.push(item);
-    })
+// pull schema?
 
-    // validate with schema?
+data.map(d => {
+    let item = {};
+    item.name = d.title_of_work;
+    item.location = d.geo_point_2d;
+    new_data.push(item);
+})
 
-    return JSON.stringify(new_data, null);
-}
+// validate with schema?
+
+return JSON.stringify(new_data, null);
