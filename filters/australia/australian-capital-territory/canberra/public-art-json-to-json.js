@@ -7,15 +7,30 @@ const filter = function (data, stringify) {
 
     data.map(d => {
         let item = {};
-        item.name = d.title_of_work;
+
+        item.name = d.title;
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.geo_point_2d?.lon, latitude: d.geo_point_2d?.lat };
+        let coordinates = {
+            longitude: parseFloat(d.longitude?.longitude),
+            latitude: parseFloat(d.longitude?.latitude)
+        };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
         item.coordinates = coordinates;
+
+        let details = {
+            artist: d.artist,
+            medium: d.medium,
+            suburb: d.suburb,
+            date: d.date,
+            commissioned_details: d.commissioned_details,
+            description: d.description
+        }
+        item.details = details
+        
         new_data.push(item);
     })
 
