@@ -32,13 +32,4 @@ const filter = function (data, stringify) {
   return new_data;
 };
 
-fetch("https://data.cambridgema.gov/resource/p4zn-aid4.json") // your dataset json
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(filter(data));
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
 return filter;
