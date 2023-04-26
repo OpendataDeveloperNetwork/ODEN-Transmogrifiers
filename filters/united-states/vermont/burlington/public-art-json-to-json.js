@@ -1,3 +1,5 @@
+// https://data-burlingtonvt.opendata.arcgis.com/data.json
+
 const filter = function (data, stringify) {
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
