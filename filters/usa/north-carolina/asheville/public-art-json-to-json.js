@@ -1,5 +1,3 @@
-
-    
 const filter = function (data, stringify) {
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
@@ -7,13 +5,13 @@ const filter = function (data, stringify) {
     
     let new_data = [];
 
-    data.features.map(d => {
+    data.map(d => {
         let item = {};
-        item.name = d.properties.name;
+        item.name = d.title_of_work;
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1] };
+        let coordinates = { longitude: d.geo_point_2d?.lon, latitude: d.geo_point_2d?.lat };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
