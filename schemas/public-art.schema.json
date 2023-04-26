@@ -1,0 +1,62 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "title": "Public Art",
+    "description": "A public art piece.",
+    "type": "object",
+    "required": [
+        "name",
+        "coordinates"
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The name of the public art piece."
+        },
+        "coordinates": {
+            "type": "object",
+            "description": "The coordinates of the public art location.",
+            "properties": {
+                "latitude": {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                },
+                "longitude": {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                }
+            },
+            "required": [
+                "latitude",
+                "longitude"
+            ]
+        },
+        "details": {
+            "type": "object",
+            "description": "An optional object containing additional properties of the public art.",
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "null"
+                    },
+                    {
+                        "type": "array"
+                    },
+                    {
+                        "type": "object"
+                    }
+                ]
+            }
+        }
+    }
+}
