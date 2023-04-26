@@ -1,4 +1,4 @@
-const filter = function (data, string) {
+const filter = function (data, stringify) {
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
@@ -19,10 +19,10 @@ const filter = function (data, string) {
         new_data.push(item);
     })
 
-    if (string) {
+    if (stringify) {
         return JSON.stringify(new_data, null);
     }
-    
+
     return new_data;
 }
 return filter;
