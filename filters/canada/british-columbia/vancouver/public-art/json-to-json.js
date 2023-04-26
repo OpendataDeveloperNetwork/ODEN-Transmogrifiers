@@ -1,4 +1,4 @@
-const filter = async function (data) {
+const filter = function (data) {
     data = JSON.parse(data);
     
     let new_data = [];
