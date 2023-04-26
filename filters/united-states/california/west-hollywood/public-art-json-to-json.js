@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 const filter = function (data, stringify) {
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
