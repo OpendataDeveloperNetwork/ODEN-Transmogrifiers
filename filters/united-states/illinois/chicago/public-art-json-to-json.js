@@ -17,12 +17,15 @@ const filter = function (data, stringify) {
         }
 
         let artist = d.artist;
+        let details = {}
 
         if(artist !== undefined){
-            item.artist = artist;
+            details.artist = artist;
         }
 
         item.coordinates = coordinates;
+        item.details = details;
+        
         new_data.push(item);
     })
 
