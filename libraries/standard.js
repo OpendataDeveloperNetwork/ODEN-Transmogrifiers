@@ -1,12 +1,12 @@
 // Description: Parse a CSV string into an array of objects
+const lib = new Map();
 
 const csv_parser = function (csv_string) { 
     // Source: https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data
     var re_valid = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
     
     if (!re_valid.test(csv_string)) {
-        console.log("Invalid CSV string ")
-        return null;
+        throw new Error("Invalid CSV string");
     }
 
     let new_data = [];
@@ -29,4 +29,5 @@ const csv_parser = function (csv_string) {
     })
     return new_data;
 }
-return csv_parser;
+lib.set("csv_parser", csv_parser);
+return lib;
