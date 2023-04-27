@@ -7,7 +7,7 @@ const filter = function (data, std_lib, stringify, skip_errors) {
 
   data.features.map(d => {
       let item = {};
-      let attributes = d.attributes;
+      let attributes = d.properties;
       item.name = attributes.TitleOfWork;
       if (item.name === undefined) {
         console.log(`Data name not found for art with url ${attributes.FrontPhoto}`);
