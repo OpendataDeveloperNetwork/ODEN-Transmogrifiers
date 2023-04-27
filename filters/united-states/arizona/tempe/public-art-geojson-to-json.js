@@ -5,19 +5,22 @@ const filter = function (data, stringify) {
     
     let new_data = [];
 
-    data.map(d => {
+    data.features?.map(data => {
+        let d = data.properties || {}
         let item = {};
+        
         item.name = d.Name;
         if (item.name === undefined) {
             console.log(`Data name not found for art with ID ${d.OBJECTID}`);
         }
+
         let coordinates = { longitude: d.Longitude, latitude: d.Latitude };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with ID ${d.OBJECTID}`);
         }
         item.coordinates = coordinates;
 
-        let details = {
+        item.details = {
           artist: d.Artist,
           year: d.Year,
           address: d.Address,
@@ -34,7 +37,6 @@ const filter = function (data, stringify) {
           website: d.Website,
           pic_url: d.Pic_URL,
         }
-        item.details = details
 
         new_data.push(item);
     })
@@ -45,5 +47,5 @@ const filter = function (data, stringify) {
 
     return new_data;
 }
-
+    
 return filter;
