@@ -18,8 +18,8 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   } else {
     // null data_field and no skip errors
     errors.push(data)
-    return false
-  }  
+  }
+  return false  
 }
 lib.set("null_check", null_check);
 
