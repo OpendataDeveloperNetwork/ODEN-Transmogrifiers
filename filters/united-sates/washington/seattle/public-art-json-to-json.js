@@ -47,13 +47,4 @@ const filter = function (data, stringify) {
     return new_data;
 }
 
-// for testing purposes, comment return
 return filter;
-
-// for the purpose of testing only.
-fetch("https://data.seattle.gov/resource/j7sn-tdzk.json")
-.then(response => response.json())
-.then(data => {
-    console.log(filter(data));
-})
-.catch(error => console.log(error));
