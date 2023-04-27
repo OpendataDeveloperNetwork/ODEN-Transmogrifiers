@@ -6,12 +6,10 @@ const lib = new Map();
 const null_check = (dst, data, data_field, skip_errors, errors) => {
   // data is null, undefined or an empty object
   if (!data || Object.keys(data).length === 0) {
-    console.log("No data or data field supplied")
-    return false
+    throw new Error("No data or data field given")
   }
   if (data_field) {
     dst = data_field
-    console.log(`${data_field} has been added to the destination object.`)
     return true
   }
   // null data_field and skip errors
@@ -20,7 +18,6 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   } else {
     // null data_field and no skip errors
     errors.push(data)
-    console.log(`A required value was undefined in the data. The field ${data_field} was added to the errors array.`)
   }  
 }
 lib.set("null_check", null_check);
