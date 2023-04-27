@@ -48,8 +48,9 @@ const filter = function (data, stringify) {
 }
 
 // for testing purposes, comment return
-//return filter;
+return filter;
 
+// for the purpose of testing only.
 fetch("https://data.seattle.gov/resource/j7sn-tdzk.json")
 .then(response => response.json())
 .then(data => {
