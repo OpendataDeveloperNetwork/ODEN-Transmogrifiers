@@ -5,37 +5,23 @@ const filter = function (data, std_lib, stringify, skip_errors) {
     
     let new_data = [];
 
-    data.features?.map(data => {
-        let d = data.properties || {}
+    data.features?.map(d => {
         let item = {};
         
-        item.name = d.Name;
+        item.name = d.properties["Title"];
         if (item.name === undefined) {
             console.log(`Data name not found for art with ID ${d.OBJECTID}`);
         }
 
-        let coordinates = { longitude: d.Longitude, latitude: d.Latitude };
+        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1] };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with ID ${d.OBJECTID}`);
         }
         item.coordinates = coordinates;
 
         item.details = {
-          artist: d.Artist,
-          year: d.Year,
-          address: d.Address,
-          hours: d.Hours,
-          tab_name: d.Tab_Name,
-          short_desc: d.Short_Desc,
-          desc1: d.Desc1,
-          desc2: d.Desc2,
-          desc3: d.Desc3,
-          desc4: d.Desc4,
-          desc5: d.Desc5,
-          neighborhood: d.Neighborhood,
-          developer: d.Developer,
-          website: d.Website,
-          pic_url: d.Pic_URL,
+          artist: d.properties["Artist"],
+          description: d.properties["ProjectInitiative"]
         }
 
         new_data.push(item);
