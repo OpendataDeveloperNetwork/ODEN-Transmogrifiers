@@ -20,7 +20,7 @@ const filter = function (data, stringify) {
 
         let details = {name: d.properties.name, artist: d.properties.artist, location: d.properties.location, type: d.properties.type, urbantrail: d.properties.urbantrail};
         item.details = details;
-        
+        new_data.push(item);
     })
 
     if (stringify) {

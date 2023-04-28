@@ -13,7 +13,7 @@ const filter = function (data, stringify) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
 
-        let coordinates = { longitude: d.x_coordinate, latitude: d.y_coordinate };
+        let coordinates = { longitude: parseFloat(d.x_coordinate), latitude: parseFloat(d.y_coordinate) };
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }

@@ -6,6 +6,10 @@ const filter = function (data, stringify) {
   let new_data = [];
 
   data.features.map(d => {
+        ///////////////////////////////
+        // console.log("!!!")
+        //console.log(d.properties.TitleOfWork)
+        ///////////////////////////////
       let item = {};
       let attributes = d.attributes;
       item.name = attributes.TitleOfWork;
