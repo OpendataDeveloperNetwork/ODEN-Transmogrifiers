@@ -9,11 +9,12 @@ const filter = function (data, std_lib, stringify, skip_errors) {
       let item = {};
       let attributes = d.properties;
       item.name = attributes.TitleOfWork;
+      console.log(item.name)
       if (item.name === undefined) {
         console.log(`Data name not found for art with url ${attributes.FrontPhoto}`);
       }
       let geometry = d.geometry
-      let coordinates = { latitude: geometry?.x, longitude: geometry?.y};
+      let coordinates = { latitude: geometry["coordinates"][0], longitude: geometry["coordinates"][1]};
       if (coordinates.latitude === undefined || coordinates.longitude === undefined) {
         console.log(`Data coordinates not found for art with url ${attributes.FrontPhoto}`);
       }

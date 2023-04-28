@@ -7,11 +7,11 @@ const filter = function (data, std_lib, stringify, skip_errors) {
 
     data.features.map(d => {
         let item = {};
-        item.name = d.properties.title;
+        item.name = d.properties.Title;
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.properties.Longitude, latitude: d.properties.Latitude};
+        let coordinates = { longitude: parseInt(d.properties.Longitude), latitude: d.properties.Latitude};
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
@@ -22,10 +22,10 @@ const filter = function (data, std_lib, stringify, skip_errors) {
         details.address = d.properties.Address;
         details.artist_first_name = d.properties.Artist_First;
         details.artist_last_name = d.properties.Artist_Last_;
-        details.media = d.properties.media;
-        details.year_created = d.properties.Year_Created;
-        details.neighbourhood = d.properties.Neighbourhood;
-        details.image_url = d.properties.Image_Url;
+        details.media = String(d.properties.Media);
+        details.year_created = String(d.properties.Year_Created);
+        details.neighbourhood = d.properties.Neighborhood;
+        details.image_url = String(d.properties.Image_Url);
 
         item.details = details;
         new_data.push(item);
