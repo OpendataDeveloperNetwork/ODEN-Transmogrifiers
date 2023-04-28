@@ -5,24 +5,25 @@ const filter = function (data, stringify) {
     
     let new_data = [];
 
-    data["features"].map(d => {
+    data.map(d => {
         let item = {};
-        item.name = d.properties["title"];
+        item.name = d["title"];
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1]};
+        let coordinates = { longitude: d["point"]["coordinates"][0], latitude: d["point"]["coordinates"][1]};
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
+
         item.coordinates = coordinates;
 
         let details = {};
-        if (d.properties["short_desc"] != null || d.properties["short_desc"] != undefined) {
-            details.description = d.properties["short_desc"];
+        if (d["short_desc"] != null || d["short_desc"] != undefined) {
+            details.description = d["short_desc"];
         }
-        details.artist = d.properties.artist;
-        details.website = d.properties.website;
+        details.artist = d["artist"];
+        details.website = d["website"]["url"];
 
         item.details = details;
         new_data.push(item);
