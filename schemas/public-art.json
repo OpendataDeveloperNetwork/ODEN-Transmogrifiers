@@ -36,26 +36,12 @@
             "type": "object",
             "description": "An optional object containing additional properties of the public art.",
             "additionalProperties": {
-                "anyOf": [
-                    {
-                        "type": "string"
-                    },
-                    {
-                        "type": "number"
-                    },
-                    {
-                        "type": "boolean"
-                    },
-                    {
-                        "type": "null"
-                    },
-                    {
-                        "type": "array"
-                    },
-                    {
-                        "type": "object"
-                    }
-                ]
+                "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "object",
+                    "array"]
             }
         }
     }
