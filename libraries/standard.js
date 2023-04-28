@@ -53,6 +53,16 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   return false  
 }
 
+const add_if_not_null = (dst, src) => {
+  if (src) {
+    dst = src
+    return true
+  }
+  return false
+}
+
 lib.set("csv_parser", csv_parser);
 lib.set("null_check", null_check);
+lib.set("add_if_not_null", add_if_not_null);
+
 return lib;
