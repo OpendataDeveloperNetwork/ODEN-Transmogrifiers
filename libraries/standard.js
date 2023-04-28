@@ -53,6 +53,20 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   return false  
 }
 
+// takes the whole details object and removes any null values
+// use case: item.details = remove_if_null(details);
+const remove_if_null = function(details_obj){
+  // go through the details object and remove any null values
+  Object.keys(details_obj).forEach(key => {
+      if (details_obj[key] === null) {
+        delete details_obj[key];
+      }
+    });
+    // return the details object without null values
+    return details_obj
+}
+
 lib.set("csv_parser", csv_parser);
 lib.set("null_check", null_check);
+lib.set("remove_if_null", remove_if_null);
 return lib;
