@@ -1,4 +1,4 @@
-const filter = function (data, stringify) {
+const filter = function (data, std_lib, stringify, skip_errors) {
     data = JSON.parse(data);
     data = data.features;
     let new_data = [];
