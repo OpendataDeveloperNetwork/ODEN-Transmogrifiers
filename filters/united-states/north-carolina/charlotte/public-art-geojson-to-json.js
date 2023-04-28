@@ -6,18 +6,15 @@ const filter = function (data, stringify) {
   let new_data = [];
 
   data.features.map(d => {
-        ///////////////////////////////
-        // console.log("!!!")
-        //console.log(d.properties.TitleOfWork)
-        ///////////////////////////////
       let item = {};
-      let attributes = d.attributes;
+      let attributes = d.properties;
       item.name = attributes.TitleOfWork;
+      console.log(item.name)
       if (item.name === undefined) {
         console.log(`Data name not found for art with url ${attributes.FrontPhoto}`);
       }
       let geometry = d.geometry
-      let coordinates = { latitude: geometry?.x, longitude: geometry?.y};
+      let coordinates = { latitude: geometry["coordinates"][0], longitude: geometry["coordinates"][1]};
       if (coordinates.latitude === undefined || coordinates.longitude === undefined) {
         console.log(`Data coordinates not found for art with url ${attributes.FrontPhoto}`);
       }
