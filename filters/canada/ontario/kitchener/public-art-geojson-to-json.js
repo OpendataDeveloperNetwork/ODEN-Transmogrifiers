@@ -5,32 +5,28 @@ const filter = function (data, std_lib, stringify, skip_errors) {
     
     let new_data = [];
 
-    data.map(d => {
+    data["features"].map(d => {
         let item = {};
-
-        item.name = d.title;
+        item.name = d.properties.MAP_LABEL;
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = {
-            longitude: parseFloat(d.longitude?.longitude),
-            latitude: parseFloat(d.longitude?.latitude)
-        };
+        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1]};
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
         item.coordinates = coordinates;
 
-        let details = {
-            artist: d.artist,
-            medium: d.medium,
-            suburb: d.suburb,
-            date: d.date,
-            commissioned_details: d.commissioned_details,
-            description: d.description
+        let details = {};
+        if (d.properties["Description"] != null || d.properties["Description"] != undefined) {
+            details.description = d.properties["Description"];
         }
-        item.details = details
-        
+        details.artist_first_name = d.properties["ARTIST_FIRST_NAME"];
+        details.artist_last_name = d.properties["ARTIST_LAST_NAME"];
+        details.location = d.properties["LOCATION"];
+        details.location_description = d.properties["LOCATION_DESCRIPTION"];
+
+        item.details = details;
         new_data.push(item);
     })
 
@@ -40,4 +36,5 @@ const filter = function (data, std_lib, stringify, skip_errors) {
 
     return new_data;
 }
+
 return filter;

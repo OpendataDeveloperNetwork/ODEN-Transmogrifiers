@@ -1,4 +1,4 @@
-const filter = function (data, stringify) {
+const filter = function (data, std_lib, stringify, skip_errors) {
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
@@ -7,22 +7,21 @@ const filter = function (data, stringify) {
 
     data["features"].map(d => {
         let item = {};
-        item.name = d.properties["title"];
+        item.name = d.attributes["ARTWORK_TITLE"];
         if (item.name === undefined) {
             console.log(`Data name not found for art with url ${d.url}`);
         }
-        let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1]};
+        let coordinates = { longitude: d.attributes["LONGITUDE"], latitude: d.attributes["LATITUDE"]};
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
             console.log(`Data coordinates not found for art with url ${d.url}`);
         }
         item.coordinates = coordinates;
 
         let details = {};
-        if (d.properties["short_desc"] != null || d.properties["short_desc"] != undefined) {
-            details.description = d.properties["short_desc"];
+        if (d.attributes["DESCRIPTION"] != null || d.attributes["DESCRIPTION"] != undefined) {
+            details.description = d.attributes["DESCRIPTION"];
         }
-        details.artist = d.properties.artist;
-        details.website = d.properties.website;
+        details.location = d.attributes["STREET"];
 
         item.details = details;
         new_data.push(item);
