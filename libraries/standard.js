@@ -53,6 +53,7 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   return false  
 }
 
+
 // takes the whole details object and removes any null values
 // use case: item.details = remove_if_null(details);
 const remove_if_null = function(details_obj){
@@ -66,7 +67,17 @@ const remove_if_null = function(details_obj){
     return details_obj
 }
 
+const add_if_not_null = (dst, src) => {
+  if (src) {
+    dst = src
+    return true
+  }
+  return false
+}
+
 lib.set("csv_parser", csv_parser);
 lib.set("null_check", null_check);
 lib.set("remove_if_null", remove_if_null);
+lib.set("add_if_not_null", add_if_not_null);
+
 return lib;
