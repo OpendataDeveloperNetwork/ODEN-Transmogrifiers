@@ -53,6 +53,20 @@ const null_check = (dst, data, data_field, skip_errors, errors) => {
   return false  
 }
 
+
+// takes the whole details object and removes any null values
+// use case: item.details = remove_if_null(details);
+const remove_if_null = function(details_obj){
+  // go through the details object and remove any null, undefined, length 0, and if its a string with only white spaces (trim begin and end spaces, and if length is 0 then we know that the string is just white spaces)
+  Object.keys(details_obj).forEach(key => {
+      if (details_obj[key] === null || details_obj[key] === undefined || details_obj[key].length <= 0 || details_obj[key].trim().length === 0) {
+        delete details_obj[key];
+      }
+    });
+    // return the details object without null values
+    return details_obj
+}
+
 const add_if_not_null = (dst, src) => {
   if (src) {
     dst = src
@@ -63,6 +77,7 @@ const add_if_not_null = (dst, src) => {
 
 lib.set("csv_parser", csv_parser);
 lib.set("null_check", null_check);
+lib.set("remove_if_null", remove_if_null);
 lib.set("add_if_not_null", add_if_not_null);
 
 return lib;
