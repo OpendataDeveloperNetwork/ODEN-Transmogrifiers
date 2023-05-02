@@ -76,7 +76,7 @@
                 },
                 "region": {
                     "type": "string",
-                    "description": "State, Province or Territory"
+                    "description": "State, Province or Territory."
                 },
                 "country": {
                     "type": "string"
@@ -95,7 +95,7 @@
             "description": "Owner of the art piece."
         },
         "budget": {
-            "type": "string",
+            "type": "number",
             "description": "Budget of the art piece."
         },
         "value": {
