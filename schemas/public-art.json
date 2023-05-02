@@ -32,16 +32,86 @@
                 "longitude"
             ]
         },
+        "artist": {
+            "type": "string",
+            "description": "The name of the artist."
+        },
+        "date": {
+            "type": "object",
+            "description": "An object containing relevant dates.",
+            "properties": {
+                "date_created": {
+                    "day": "number",
+                    "month": "number",
+                    "year": "number"
+                },
+                "date_installed": {
+                    "day": "number",
+                    "month": "number",
+                    "year": "number"
+                },
+                "date_commissioned": {
+                    "day": "number",
+                    "month": "number",
+                    "year": "number"
+                }
+            }
+        },
+        "description": {
+            "type": "string",
+            "description": "Description of the art piece."
+        },
+        "address": {
+            "type": "object",
+            "description": "Description of the art piece.",
+            "properties": {
+                "street_address": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                }
+            }
+        },
+        "material": {
+            "type": "string",
+            "description": "What the art piece is made of."
+        },
+        "owner": {
+            "type": "string",
+            "description": "Owner of the art piece."
+        },
+        "budget": {
+            "type": "string",
+            "description": "Budget of the art piece."
+        },
+        "value": {
+            "type": "number",
+            "description": "Monetary value of the art piece."
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of the art piece (i.e. sculpture, mural, painting, etc)."
+        },
+        "area": {
+            "type": "string",
+            "description": "Area in which the art piece is located (i.e. 'Queens' in New York)."
+        },
+        "image_urls": {
+            "type": "array",
+            "description": "An array of image urls for the art piece."
+        },
         "details": {
             "type": "object",
             "description": "An optional object containing additional properties of the public art.",
             "additionalProperties": {
-                "type": [
-                    "string",
-                    "number",
-                    "boolean",
-                    "object",
-                    "array"]
+                "type": ["array", "object", "string", "number", "boolean"]
             }
         }
     }
