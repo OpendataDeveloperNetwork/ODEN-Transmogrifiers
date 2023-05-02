@@ -36,23 +36,23 @@
             "type": "string",
             "description": "The name of the artist."
         },
-        "date": {
+        "dates": {
             "type": "object",
             "description": "An object containing relevant dates.",
             "properties": {
-                "date_created": {
+                "created": {
                     "day": "number",
                     "month": "number",
                     "year": "number",
                     "date_string": "string"
                 },
-                "date_installed": {
+                "installed": {
                     "day": "number",
                     "month": "number",
                     "year": "number",
                     "date_string": "string"
                 },
-                "date_commissioned": {
+                "commissioned": {
                     "day": "number",
                     "month": "number",
                     "year": "number",
@@ -66,9 +66,9 @@
         },
         "address": {
             "type": "object",
-            "description": "Description of the art piece.",
+            "description": "Physical address of the art piece.",
             "properties": {
-                "street_address": {
+                "street_address": { 
                     "type": "string"
                 },
                 "city": {
@@ -76,7 +76,7 @@
                 },
                 "region": {
                     "type": "string",
-                    "description": "State, Province or Territory."
+                    "description": "State, Province or Territory"
                 },
                 "country": {
                     "type": "string"
