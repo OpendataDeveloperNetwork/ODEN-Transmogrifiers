@@ -18,6 +18,7 @@ const filter = function (data, std_lib, params) {
     }
     
     // define new data and errors array
+    let total_entries = 0;
     let new_data = [];
     let errors = [];
 
@@ -25,6 +26,7 @@ const filter = function (data, std_lib, params) {
     data.map(d => {
         let item = {};
         let skip = false;
+        total_entries++;
         
         // add name (required)
         if (!add_required(item, "name", d, d.title_of_work, params.skip_errors, errors)) {
@@ -67,7 +69,8 @@ const filter = function (data, std_lib, params) {
 
     // check if errors occurred
     if (errors.length > 0) {
-        let err = {message: "data entries missing required field(s) during filtering", errors: errors};
+        // recording total entries and number of errors is needed for the validator
+        let err = {message: "data entries missing required field(s) during filtering", total_entries: total_entries, num_errors: errors.length, errors: errors};
         throw err;
     }
 
