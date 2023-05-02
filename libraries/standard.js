@@ -48,12 +48,19 @@ const add_required = (dst, dst_field, data, data_field, skip_errors, errors) => 
     console.log(`A required field ${dst_field} was undefined or null. Skipping entry`)
   } else {
     // null data_field and no skip errors
-    let err = {missing_field: dst_field, data_entry: data}
+    let err = { missing_field: dst_field, data_entry: data }
     errors.push(err);
   }
   return false
 }
 
+const add_if_not_null = (dst, dst_field, src) => {
+  if (src) {
+    dst[dst_field] = src
+    return true
+  }
+  return false
+}
 
 // takes the whole details object and removes any null values
 // use case: item.details = remove_if_null(details);
@@ -68,12 +75,10 @@ const remove_if_null = function (details_obj) {
   return details_obj
 }
 
-const add_if_not_null = (dst, dst_field, src) => {
-  if (src) {
-    dst[dst_field] = src
-    return true
+const remove_if_empty = function (object, field) {
+  if (Object.keys(object[field]).length <= 0) {
+    delete object[field];
   }
-  return false
 }
 
 const validate_params = function (params) {
@@ -85,14 +90,14 @@ const validate_params = function (params) {
     empty_params.validate = false;
     return empty_params;
   }
-  
+
   // validation with schema
   if (params.schema && !params.validator) {
     throw "schema provided with no validator";
   } else if (!params.schema && params.validator) {
     throw "validator provided with no schema";
   } else if (params.schema && params.validator) {
-    schema = JSON.parse(params.schema);
+    params.schema = JSON.parse(params.schema);
     params.validate = true;
   } else {
     params.validate = false;
@@ -103,8 +108,9 @@ const validate_params = function (params) {
 
 lib.set("csv_parser", csv_parser);
 lib.set("add_required", add_required);
-lib.set("remove_if_null", remove_if_null);
 lib.set("add_if_not_null", add_if_not_null);
+lib.set("remove_if_null", remove_if_null);
+lib.set("remove_if_empty", remove_if_empty);
 lib.set("validate_params", validate_params);
 
 return lib;

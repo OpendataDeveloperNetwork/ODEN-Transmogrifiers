@@ -6,6 +6,7 @@ const filter = function (data, std_lib, params) {
     let add_required = std_lib.get("add_required");
     let add_if_not_null = std_lib.get("add_if_not_null")
     let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
     let validate_params = std_lib.get("validate_params");
     
     // validate parameters object
@@ -56,9 +57,7 @@ const filter = function (data, std_lib, params) {
         item.details = remove_if_null(item.details);
         
         // check for and remove empty details object
-        if (Object.keys(item.details).length <= 0) {
-            delete item.details;
-        }
+        remove_if_empty(item, "details");
     
         // skip adding to new data if required field not found
         if (!skip) {
@@ -75,7 +74,7 @@ const filter = function (data, std_lib, params) {
     // validate new data against a schema
     if (params.validate) {
         new_data.map(d => {
-            params.validator.validate(d, schema, {required: true, throwAll: true});
+            params.validator.validate(d, params.schema, {required: true, throwAll: true});
         })
     }
 
