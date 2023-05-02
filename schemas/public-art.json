@@ -43,17 +43,20 @@
                 "date_created": {
                     "day": "number",
                     "month": "number",
-                    "year": "number"
+                    "year": "number",
+                    "date_string": "string"
                 },
                 "date_installed": {
                     "day": "number",
                     "month": "number",
-                    "year": "number"
+                    "year": "number",
+                    "date_string": "string"
                 },
                 "date_commissioned": {
                     "day": "number",
                     "month": "number",
-                    "year": "number"
+                    "year": "number",
+                    "date_string": "string"
                 }
             }
         },
@@ -68,8 +71,12 @@
                 "street_address": {
                     "type": "string"
                 },
-                "region": {
+                "city": {
                     "type": "string"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "State, Province or Territory"
                 },
                 "country": {
                     "type": "string"
