@@ -1,4 +1,18 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
+const filter = function (data, std_lib, params) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+    
+    // validate parameters object
+    params = validate_params(params);
+
+
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
@@ -9,28 +23,49 @@ const filter = function (data, std_lib, stringify, skip_errors) {
         let item = {};
         item.name = d.properties.MAP_LABEL;
         if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+            console.log("Data name not found for art with url", d.url);
         }
         let coordinates = { longitude: d.geometry.coordinates[0], latitude: d.geometry.coordinates[1]};
         if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+            console.log("Data coordinates not found for art with url", d.url);
         }
         item.coordinates = coordinates;
 
-        let details = {};
-        if (d.properties["Description"] != null || d.properties["Description"] != undefined) {
-            details.description = d.properties["Description"];
-        }
-        details.artist_first_name = d.properties["ARTIST_FIRST_NAME"];
-        details.artist_last_name = d.properties["ARTIST_LAST_NAME"];
-        details.location = d.properties["LOCATION"];
-        details.location_description = d.properties["LOCATION_DESCRIPTION"];
+        //optional fields
+        // item.artist = d.properties.ARTIST_FIRST_NAME + " " + d.properties.ARTIST_LAST_NAME
+        let artist_name;
+        if (d.properties.ARTIST_FIRST_NAME != null) artist_name = d.properties.ARTIST_FIRST_NAME;
+        if (d.properties.ARTIST_LAST_NAME != null) artist_name += " " + d.properties.ARTIST_LAST_NAME;
+        add_if_not_null(item, "artist", artist_name);
 
+        item.date = {
+            date_created: {},
+            date_installed: {}
+        }
+
+        if (d.properties["CONSTRUCTION_YEAR"]) add_if_not_null(item.date.date_created, "year", d.properties.CONSTRUCTION_YEAR);
+        if (d.properties["INSTALLATION_YEAR"]) add_if_not_null(item.date.date_installed, "year", d.properties["INSTALLATION_YEAR"]);
+        add_if_not_null(item.material, d.properties["MEDIUM"]);
+        add_if_not_null(item.owner, d.properties["OWNERSHIP"]);
+        add_if_not_null(item.area, d.properties["LOCATION"]);
+        // add_if_not_null(item.address.street_address, d.properties["COMMON_LOCATION_REFERENCE"]);
+        // add_if_not_null(item.address.city, d.properties["MUNICIPALITY"]);
+
+        let details = {
+            status: d.properties["STATUS"],
+            landmark: d.properties["LANDMARK"]
+        }
+
+        details = remove_if_null(details);
+        remove_if_empty(item.date, "date_created");
+        remove_if_empty(item.date, "date_installed");
+        remove_if_empty(item, "date");
         item.details = details;
         new_data.push(item);
+        console.log(item);
     })
 
-    if (stringify) {
+    if (params.stringify) {
         return JSON.stringify(new_data, null);
     }
 
