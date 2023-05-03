@@ -93,7 +93,7 @@ const validate_params = function (schema, validator) {
     throw "schema provided with no validator";
   } else if (!schema && validator) {
     throw "validator provided with no schema";
-  } else if (schema && validator) {
+  } else {
     schema = JSON.parse(schema);
   }
   return schema;
