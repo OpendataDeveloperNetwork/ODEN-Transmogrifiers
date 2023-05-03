@@ -86,6 +86,53 @@ const remove_if_empty = function (object, field) {
   }
 }
 
+// creates a date object that complies to the schema
+const create_dates_template = function() {
+  return {
+    created: {
+      day: 0,
+      month: 0,
+      year: 0,
+      date_string: "",
+    },
+    installed: {
+        day: 0,
+        month: 0,
+        year: 0,
+        date_string: "",
+    },
+    commissioned: {
+        day: 0,
+        month: 0,
+        year: 0,
+        date_string: "",
+    }
+  }
+}
+
+// removes all the fields within the date object that were not populated with data
+const remove_null_date_fields = function(item) {
+  for (const property in item.dates) {
+    remove_if_zero(item.dates[property]);
+  }
+  for (const att in item.dates) {
+      if (Object.keys(item.dates[att]).length == 0) {
+          delete item.dates[att];
+      }
+  }
+  if (Object.keys(item.dates).length == 0) {
+      delete item.dates;
+  }
+  return item;
+}
+
+const remove_if_zero = function(object) {
+  for (const prop in object) {
+      if (object[prop] == 0) delete object[prop];
+      else if (object[prop] == "") delete object[prop];
+  }
+}
+
 const validate_params = function (schema, validator) {
   if (!schema && !validator) {
     throw "no schema or validator provided"
@@ -105,5 +152,7 @@ lib.set("add_if_not_null", add_if_not_null);
 lib.set("remove_if_null", remove_if_null);
 lib.set("remove_if_empty", remove_if_empty);
 lib.set("validate_params", validate_params);
+lib.set("remove_null_date_fields", remove_null_date_fields);
+lib.set("create_dates_template", create_dates_template);
 
 return lib;
