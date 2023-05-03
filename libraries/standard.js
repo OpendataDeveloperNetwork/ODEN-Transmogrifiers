@@ -101,20 +101,6 @@ const date_template = {
   }
 }
 
-const remove_null_date_fields = function(item) {
-  for (const property in item.date) {
-    console.log("Removing", property)
-    remove_if_empty(item[property]);
-  }
-  return date_object;
-}
-
-const remove_if_zero = function(object, field) {
-  if (Object.keys(object[field]) == 0) {
-    delete object[field];
-  }
-}
-
 const remove_if_empty = function (object, field) {
   if (Object.keys(object[field]).length <= 0) {
     delete object[field];
