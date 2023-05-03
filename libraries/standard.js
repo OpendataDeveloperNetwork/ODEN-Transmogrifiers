@@ -80,27 +80,6 @@ const remove_if_null = function (details_obj) {
   return details_obj
 }
 
-const date_template = {
-  date_created: {
-    day: 0,
-    month: 0,
-    year: 0,
-    date_string: "",
-  },
-  date_installed: {
-      day: 0,
-      month: 0,
-      year: 0,
-      date_string: "",
-  },
-  date_commissioned: {
-      day: 0,
-      month: 0,
-      year: 0,
-      date_string: "",
-  }
-}
-
 const remove_if_empty = function (object, field) {
   if (Object.keys(object[field]).length <= 0) {
     delete object[field];
