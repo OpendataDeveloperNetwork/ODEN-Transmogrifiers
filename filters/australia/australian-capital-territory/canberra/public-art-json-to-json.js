@@ -1,43 +1,80 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
+const filter = function (data, std_lib, schema, validator, stringify) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+    let create_dates_template = std_lib.get("create_dates_template");
+    let remove_null_date_fields = std_lib.get("remove_null_date_fields");
+    
+    // validate schema and validator
+    schema = validate_params(schema, validator);
+    
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
     
+    // define new data and errors array
     let new_data = [];
+    let errors = [];
 
+    // iterate through each data entry
     data.map(d => {
         let item = {};
+        let skip = false;
 
-        item.name = d.title;
-        if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+        // add name (required)
+        if (!add_required(item, "name", d, d.title, errors)) {
+            skip = true;
         }
-        let coordinates = {
-            longitude: parseFloat(d.longitude?.longitude),
-            latitude: parseFloat(d.longitude?.latitude)
-        };
-        if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+    
+        // add coordinates (required)
+        item.coordinates = {};
+        if (!add_required(item.coordinates, "longitude", d, parseFloat(d.longitude?.longitude), errors)) {
+            skip = true;
         }
-        item.coordinates = coordinates;
-
-        let details = {
-            artist: d.artist,
-            medium: d.medium,
-            suburb: d.suburb,
-            date: d.date,
-            commissioned_details: d.commissioned_details,
-            description: d.description
+        if (!add_required(item.coordinates, "latitude", d, parseFloat(d.longitude?.latitude), errors)) {
+            skip = true;
         }
-        item.details = details
         
-        new_data.push(item);
+        add_if_not_null(item, "description", d.description);
+        add_if_not_null(item, "artist", d.artist);
+        add_if_not_null(item, "material", d.medium);
+        add_if_not_null(item, "area", d.suburb);
+
+        item.dates = create_dates_template();
+        add_if_not_null(item.dates.installed, "year", d.date);
+
+        remove_null_date_fields(item);
+
+        item.details = {}
+        add_if_not_null(item.details, "acquisition_details", d.acquisition_details)
+        
+        item.details = remove_if_null(item.details);
+        
+        // check for and remove empty details object
+        remove_if_empty(item, "details");
+    
+        // skip adding to new data if required field not found
+        if (!skip) {
+            let result = validator.validate(item, schema, { required: true });
+            if (!result.valid) {
+                errors.push({type: "validation", validation_result: result, data_entry: d})
+            } else {
+                new_data.push(item);
+            }
+        }
     })
 
+    // return data and convert to string if enabled
     if (stringify) {
-        return JSON.stringify(new_data, null);
+        new_data = JSON.stringify(new_data, null);
     }
 
-    return new_data;
+    return {data: new_data, errors: errors};
 }
 return filter;
