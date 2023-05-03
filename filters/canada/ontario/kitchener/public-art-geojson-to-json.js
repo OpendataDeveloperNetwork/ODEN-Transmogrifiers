@@ -8,6 +8,9 @@ const filter = function (data, std_lib, params) {
     let remove_if_null = std_lib.get("remove_if_null");
     let remove_if_empty = std_lib.get("remove_if_empty");
     let validate_params = std_lib.get("validate_params");
+    let remove_if_zero = std_lib.get("remove_if_zero");
+    let remove_null_date_fields = std_lib.remove_null_date_fields;
+    console.log(remove_null_date_fields)
     
     // validate parameters object
     params = validate_params(params);
@@ -38,13 +41,14 @@ const filter = function (data, std_lib, params) {
         if (d.properties.ARTIST_LAST_NAME != null) artist_name += " " + d.properties.ARTIST_LAST_NAME;
         add_if_not_null(item, "artist", artist_name);
 
-        item.date = {
-            date_created: {},
-            date_installed: {}
-        }
 
-        if (d.properties["CONSTRUCTION_YEAR"]) add_if_not_null(item.date.date_created, "year", d.properties.CONSTRUCTION_YEAR);
-        if (d.properties["INSTALLATION_YEAR"]) add_if_not_null(item.date.date_installed, "year", d.properties["INSTALLATION_YEAR"]);
+        item.dates = std_lib.dates_template
+
+        add_if_not_null(item.dates.created, "year", d.properties["CONSTRUCTION_YEAR"]);
+        add_if_not_null(item.dates.installed, "year", d.properties["INSTALLATION_YEAR"]);
+
+        remove_null_date_fields(item);
+
         add_if_not_null(item.material, d.properties["MEDIUM"]);
         add_if_not_null(item.owner, d.properties["OWNERSHIP"]);
         add_if_not_null(item.area, d.properties["LOCATION"]);
@@ -57,9 +61,10 @@ const filter = function (data, std_lib, params) {
         }
 
         details = remove_if_null(details);
-        remove_if_empty(item.date, "date_created");
-        remove_if_empty(item.date, "date_installed");
-        remove_if_empty(item, "date");
+        
+        // remove_if_empty(item.date, "date_created");
+        // remove_if_empty(item.date, "date_installed");
+        // remove_if_empty(item, "date");
         item.details = details;
         new_data.push(item);
         console.log(item);
