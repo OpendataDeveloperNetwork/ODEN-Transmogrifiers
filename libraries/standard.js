@@ -34,7 +34,7 @@ const csv_parser = function (csv_string) {
 // check if read values are null, undefined or blank (empty string)
 // dst: destination object, data: data item being processed, 
 // data_field: field being processed, skip_errors: boolean, errors: array of bad data items
-const add_required = (dst, dst_field, data, data_field, skip_errors, errors) => {
+const add_required = (dst, dst_field, data, data_field, errors) => {
   // data is null, undefined or an empty object
   if (!data || Object.keys(data).length === 0) {
     throw new Error("No data or data field given")
@@ -43,12 +43,17 @@ const add_required = (dst, dst_field, data, data_field, skip_errors, errors) => 
     dst[dst_field] = data_field
     return true
   }
-  // null data_field and skip errors
-  if (!data_field && skip_errors) {
-    console.log(`A required field ${dst_field} was undefined or null. Skipping entry`)
+  
+  // create error and check if the data entry already exists in errors
+  let err = { type: "missing-fields", missing_fields: [dst_field], data_entry: data }
+  let idx = errors.findIndex(e => {
+    return JSON.stringify(e.data_entry) === JSON.stringify(data);
+  })
+
+  // if the data entry exists, add another missing field, if not create new entry
+  if (idx >= 0) {
+    errors[idx].missing_fields.push(dst_field);
   } else {
-    // null data_field and no skip errors
-    let err = { missing_field: dst_field, data_entry: data }
     errors.push(err);
   }
   return false
@@ -81,29 +86,17 @@ const remove_if_empty = function (object, field) {
   }
 }
 
-const validate_params = function (params) {
-  // handle no passed options
-  if (!params) {
-    let empty_params = {};
-    empty_params.stringify = false;
-    empty_params.skip_errors = false;
-    empty_params.validate = false;
-    return empty_params;
-  }
-
-  // validation with schema
-  if (params.schema && !params.validator) {
+const validate_params = function (schema, validator) {
+  if (!schema && !validator) {
+    throw "no schema or validator provided"
+  } else if (schema && !validator) {
     throw "schema provided with no validator";
-  } else if (!params.schema && params.validator) {
+  } else if (!schema && validator) {
     throw "validator provided with no schema";
-  } else if (params.schema && params.validator) {
-    params.schema = JSON.parse(params.schema);
-    params.validate = true;
   } else {
-    params.validate = false;
+    schema = JSON.parse(schema);
   }
-
-  return params;
+  return schema;
 }
 
 lib.set("csv_parser", csv_parser);
