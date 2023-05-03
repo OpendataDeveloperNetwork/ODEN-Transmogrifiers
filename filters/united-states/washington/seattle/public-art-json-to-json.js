@@ -1,50 +1,109 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
+const filter = function (data, std_lib, schema, validator, stringify) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+    let create_dates_template = std_lib.get("create_dates_template");
+    let remove_null_date_fields = std_lib.get("remove_null_date_fields");
+
+    // validate parameters object
+    schema = validate_params(schema, validator);
+
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
-    
+
+    // define new data and errors array
+    let total_entries = 0;
     let new_data = [];
+    let errors = [];
 
     data.map(d => {
         let item = {};
-        item.name = d.title;
-        if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+        let skip = false;
+        total_entries++;
+
+        // add name field
+        if (!add_required(item, "name", d, d.title, errors)) {
+            skip = true;
         }
-        let coordinates = { longitude: d.latitude, latitude: d.longitude };
-        if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+
+        // add coordinate field
+        let coordinates = {};
+        if (!add_required(coordinates, "longitude", d, parseFloat(d.longitude), errors)) {
+            skip = true;
+        }
+        if (!add_required(coordinates, "latitude", d, parseFloat(d.latitude), errors)) {
+            skip = true;
         }
         item.coordinates = coordinates;
 
-        // for optional not currently standardized fields.
+        // add artist field
+        if (d.artist_first_name || d.artist_last_name) {
+            item.artist = d.artist_first_name, d.artist_last_name;
+        }
+
+        // add defined field
+        add_if_not_null(item, "description", d.description);
+        add_if_not_null(item, "media", d.media);
+        item.address = {};
+        if (d.geolocation.human_address) {
+            let human_address_parsed = JSON.parse(d.geolocation.human_address);
+            add_if_not_null(item.address, "street_address", human_address_parsed.address);
+            add_if_not_null(item.address, "city", human_address_parsed.city);
+            add_if_not_null(item.address, "region", human_address_parsed.state);
+            add_if_not_null(item.address, "zip", human_address_parsed.zip);
+        }
+        remove_if_empty(item, "address");
+        add_if_not_null(item, "material", d.material);
+
+        if (d.date) {
+            item.dates = create_dates_template();
+            add_if_not_null(item.dates.installed, "date_string", d.date)
+        }
+
+        // add optional detail fields
         let details = {};
 
         details.saction_id = d.sac_id;
         details.project_name = d.project;
-        details.artist_first_name = d.artist_first_name;
-        details.artist_last_name = d.artist_last_name;
-        details.description = d.description;
         details.classification = d.classification;
-        details.media = d.media;
-        details.mesurement = d.measurements;
-        details.date = d.date;
-        details.address = d.address;
-        details.geolocation = d.geolocation;        
+        details.measurement = d.measurements;
+        item.details = remove_if_null(details);
+        remove_if_empty(item, "details")
 
 
-        // add optional details
-        item.details = details;
-
-        // add the filtered item to the new data
-        new_data.push(item);
+        if (!skip) {
+            let result = validator.validate(item, schema, {
+                required: true
+            });
+            if (!result.valid) {
+                errors.push({
+                    type: "validation",
+                    validation_result: result,
+                    data_entry: d
+                })
+            } else {
+                new_data.push(item);
+            }
+        }
     })
 
+
+    // return data and convert to string if enabled
     if (stringify) {
         return JSON.stringify(new_data, null);
     }
 
-    return new_data;
+    return {
+        data: new_data,
+        errors: errors
+    };
 }
 
 return filter;
