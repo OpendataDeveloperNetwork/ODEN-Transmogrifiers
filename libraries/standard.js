@@ -67,7 +67,7 @@ const add_if_not_null = (dst, dst_field, src) => {
 const remove_if_null = function (details_obj) {
   // go through the details object and remove any null, undefined, length 0, and if its a string with only white spaces (trim begin and end spaces, and if length is 0 then we know that the string is just white spaces)
   Object.keys(details_obj).forEach(key => {
-    if (details_obj[key] === null || details_obj[key] === undefined || details_obj[key].length <= 0 || details_obj[key].trim().length === 0) {
+    if (details_obj[key] === null || details_obj[key] === undefined || details_obj[key].length <= 0 || (typeof details_obj[key] == "string" && details_obj[key].trim().length === 0)) {
       delete details_obj[key];
     }
   });
