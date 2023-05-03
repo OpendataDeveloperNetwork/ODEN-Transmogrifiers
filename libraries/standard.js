@@ -81,7 +81,7 @@ const remove_if_empty = function (object, field) {
   }
 }
 
-
+// creates a date object that complies to the schema
 const create_dates_template = function() {
   return {
     created: {
@@ -105,6 +105,7 @@ const create_dates_template = function() {
   }
 }
 
+// removes all the fields within the date object that were not populated with data
 const remove_null_date_fields = function(item) {
   for (const property in item.dates) {
     remove_if_zero(item.dates[property]);
