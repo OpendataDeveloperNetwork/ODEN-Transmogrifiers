@@ -44,13 +44,13 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.coordinates = coordinates;
         
         let full_name = "";
-        if (d.primary_artist_last && d.primary_artist_last != "NULL"){
+        if (d.primary_artist_first && d.primary_artist_first!= "NULL" && d.primary_artist_last && d.primary_artist_last != "NULL"){
           full_name = d.primary_artist_first + " " + d.primary_artist_last;
-        } else if(d.primary_artist_first != "NULL"){
+        } else if(d.primary_artist_last && d.primary_artist_last != "NULL"){
+            full_name = d.primary_artist_last  
+        } else if(d.primary_artist_first && d.primary_artist_first != "NULL"){
           full_name = d.primary_artist_first
-        } else if(d.primary_artist_first != "NULL"){
-          full_name = d.primary_artist_last  
-        }
+        } 
         add_if_not_null(item, "artist", full_name);
         
         item.dates = create_dates_template();
