@@ -48,12 +48,14 @@ const filter = function (data, std_lib, schema, validator, stringify) {
       add_if_not_null(item, "type", d.object_typ);
       add_if_not_null(item, "area", d.neighborho);
       
-      item.dates = create_dates_template();
-      regular_date = d.created_da.split("T")[0]
-      add_if_not_null(item.dates.created, "year", parseInt(regular_date.split("-")[0]));
-      add_if_not_null(item.dates.created, "month", parseInt(regular_date.split("-")[1]));
-      add_if_not_null(item.dates.created, "date", parseInt(regular_date.split("-")[2]));
-      remove_null_date_fields(item)
+      if(d.created_da && d.created_da.includes("T")){
+          item.dates = create_dates_template();
+          regular_date = d.created_da.split("T")[0]
+          add_if_not_null(item.dates.created, "year", parseInt(regular_date.split("-")[0]));
+          add_if_not_null(item.dates.created, "month", parseInt(regular_date.split("-")[1]));
+          add_if_not_null(item.dates.created, "date", parseInt(regular_date.split("-")[2]));
+          remove_null_date_fields(item)
+      }
       
       item.image_urls = [];
       image_urls = [d.photo_webs];
