@@ -43,16 +43,13 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         //optional fields
         // item.artist = d.properties.ARTIST_FIRST_NAME + " " + d.properties.ARTIST_LAST_NAME
         let artist_name;
-        if (d.properties.ARTIST_FIRST_NAME != null) artist_name = d.properties.ARTIST_FIRST_NAME;
-        if (d.properties.ARTIST_LAST_NAME != null) artist_name += " " + d.properties.ARTIST_LAST_NAME;
+        if (d.properties.ARTIST_FIRST_NAME) artist_name = d.properties.ARTIST_FIRST_NAME + " ";
+        if (d.properties.ARTIST_LAST_NAME) artist_name += d.properties.ARTIST_LAST_NAME;
         add_if_not_null(item, "artist", artist_name);
 
-
         item.dates = create_dates_template();
-
         add_if_not_null(item.dates.created, "year", d.properties["CONSTRUCTION_YEAR"]);
         add_if_not_null(item.dates.installed, "year", d.properties["INSTALLATION_YEAR"]);
-
         remove_null_date_fields(item);
 
         add_if_not_null(item, "material", d.properties["MEDIUM"]);
@@ -70,7 +67,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
 
         item.details = {}
         add_if_not_null(item.details, "status", d.properties["STATUS"]);
-        remove_if_null(item.details);
+        remove_if_empty(item, "details");
 
         // skip adding to new data if required field not found
         if (!skip) {

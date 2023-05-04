@@ -26,7 +26,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         let artist;
 
         const title_field = d.title;
-        if (title_field != null && title_field.includes("by")) {
+        if (title_field && title_field.includes("by")) {
             name_artist = title_field.split("by")
             name = name_artist[0].replace(/[^a-zA-Z 0-9]+/g,'').trim();
             artist = name_artist[1].trim(); 
