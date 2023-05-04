@@ -8,6 +8,8 @@ const filter = function (data, std_lib, schema, validator, stringify) {
   let remove_if_null = std_lib.get("remove_if_null");
   let remove_if_empty = std_lib.get("remove_if_empty");
   let validate_params = std_lib.get("validate_params");
+  let create_dates_template = std_lib.get("create_dates_template");
+  let remove_null_date_fields = std_lib.get("remove_null_date_fields");
 
   // validate parameters object
   schema = validate_params(schema, validator);
@@ -52,7 +54,10 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     add_if_not_null(item, "artist", properties.Artist)
     add_if_not_null(item, "value", properties.CurrentValue)
     add_if_not_null(item, "owner", properties.Owner)
-    add_if_not_null(item, "dates.installed.date_string", properties.YearInstalled)
+
+    item.date = create_dates_template();
+    add_if_not_null(item.date.installed, "date_string", properties.YearInstalled)
+    remove_null_date_fields(item);
 
     let details = {};
     details.item_name = properties.Item_Name

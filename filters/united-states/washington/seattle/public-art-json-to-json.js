@@ -44,13 +44,12 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.coordinates = coordinates;
 
         // add artist field
-        if (d.artist_first_name || d.artist_last_name) {
-            item.artist = d.artist_first_name, d.artist_last_name;
-        }
+        artist_full_name = [d.first_name, d.last_name].filter(Boolean).join(" ");
+        add_if_not_null(item, "artist", artist_full_name);
 
         // add defined field
         add_if_not_null(item, "description", d.description);
-        add_if_not_null(item, "media", d.media);
+        add_if_not_null(item, "material", d.media);
         item.address = {};
         if (d.geolocation.human_address) {
             let human_address_parsed = JSON.parse(d.geolocation.human_address);
@@ -60,7 +59,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
             add_if_not_null(item.address, "zip", human_address_parsed.zip);
         }
         remove_if_empty(item, "address");
-        add_if_not_null(item, "material", d.material);
 
         if (d.date) {
             item.dates = create_dates_template();

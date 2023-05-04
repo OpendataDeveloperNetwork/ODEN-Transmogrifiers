@@ -68,6 +68,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         if (properties.weblink) {
             item.image_urls.push(properties.weblink);
         }
+        remove_if_empty(item, "image_urls")
 
         add_if_not_null(item, "budget", parseInt(properties.budget.replace('$', '').replace(',', '')));
 
@@ -79,7 +80,8 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         details.credit = properties.credit;
         details.geocoded_column = properties.geocoded_column;
         item.details = remove_if_null(details);
-
+        remove_if_empty(item, "details");
+        
         // skip adding to new data if required field not found
         if (!skip) {
             let result = validator.validate(item, schema, {
