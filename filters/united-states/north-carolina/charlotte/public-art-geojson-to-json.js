@@ -55,8 +55,8 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     add_if_not_null(item, "value", properties.CurrentValue)
     add_if_not_null(item, "owner", properties.Owner)
 
-    item.date = create_dates_template();
-    add_if_not_null(item.date.installed, "date_string", properties.YearInstalled)
+    item.dates = create_dates_template();
+    add_if_not_null(item.dates.installed, "date_string", properties.YearInstalled)
     remove_null_date_fields(item);
 
     let details = {};
