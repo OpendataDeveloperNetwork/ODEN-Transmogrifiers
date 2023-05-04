@@ -23,7 +23,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     let new_data = [];
     let errors = [];
 
-    data.map(d => {
+    data.data.map(d => {
         let item = {};
         let skip = false;
 
