@@ -1,37 +1,79 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
+const filter = function (data, std_lib, schema, validator, stringify) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+  
+    // validate parameters object
+    schema = validate_params(schema, validator);
+  
+    // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
-    
+  
+    // define new data and errors array
     let new_data = [];
+    let errors = [];
 
-    data["features"].map(d => {
+    data.features.map(d => {
         let item = {};
-        item.name = d.attributes["ARTWORK_TITLE"];
-        if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+        let skip = false;
+  
+        // add name (required)
+        if (!add_required(item, "name", d, d.attributes.ARTWORK_TITLE, errors)) {
+            skip = true;
         }
-        let coordinates = { longitude: d.attributes["LONGITUDE"], latitude: d.attributes["LATITUDE"]};
-        if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+  
+        // add coordinates (required)
+        let coordinates = {};
+        if (!add_required(coordinates, "longitude", d, d.attributes.LONGITUDE, errors)) {
+            skip = true;
+        }
+        if (!add_required(coordinates, "latitude", d, d.attributes.LATITUDE, errors)) {
+            skip = true;
         }
         item.coordinates = coordinates;
 
-        let details = {};
-        if (d.attributes["DESCRIPTION"] != null || d.attributes["DESCRIPTION"] != undefined) {
-            details.description = d.attributes["DESCRIPTION"];
+        add_if_not_null(item, "description", d.attributes.DESCRIPTION);
+        
+        item.address = {
+            street_address: d.attributes.STREET,
+            zipcode: d.attributes.POSTAL_CODE,
+            city: d.attributes.CITY,
+            region: d.attributes.PROVINCE
         }
-        details.location = d.attributes["STREET"];
+        item.address = remove_if_null(item.address);
+        remove_if_empty(item, "address");
 
-        item.details = details;
-        new_data.push(item);
+        item.details = {}
+        add_if_not_null(item.details, "category", d.attributes.CATEGORY);
+  
+        // check for and remove empty details object
+        remove_if_empty(item, "details");
+
+        // skip adding to new data if required field not found
+        if (!skip) {
+            let result = validator.validate(item, schema, { required: true });
+            if (!result.valid) {
+                errors.push({type: "validation", validation_result: result, data_entry: d})
+            } else {
+                new_data.push(item);
+            }
+        }
     })
 
+    // return data and convert to string if enabled
     if (stringify) {
-        return JSON.stringify(new_data, null);
+        new_data = JSON.stringify(new_data, null);
     }
-
-    return new_data;
+  
+    return {data: new_data, errors: errors};
 }
 
 return filter;
