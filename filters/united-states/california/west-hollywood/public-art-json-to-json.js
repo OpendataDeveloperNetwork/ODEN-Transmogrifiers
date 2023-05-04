@@ -52,8 +52,10 @@ const filter = function (data, std_lib, schema, validator, stringify) {
       let name_and_date = d.artist_name_and_date.split(",");
       add_if_not_null(item, "artist", name_and_date[0]);
       item.dates = create_dates_template();
-      add_if_not_null(item.dates.installed, "year", name_and_date[1]);
-      remove_null_date_fields(item);
+      if (name_and_date[1]) {
+        add_if_not_null(item.dates.installed, "year", name_and_date[1]);
+        remove_null_date_fields(item);
+      }
     }
     if (d.image_or_artist_site) {
       item.image_urls = [d.image_or_artist_site]
