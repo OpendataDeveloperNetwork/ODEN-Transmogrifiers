@@ -53,7 +53,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
 
         item.details = {}
         add_if_not_null(item.details, "category", d.attributes.CATEGORY);
-        item.details = remove_if_null(item.details);
   
         // check for and remove empty details object
         remove_if_empty(item, "details");

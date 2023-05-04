@@ -48,7 +48,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     
         item.address = {}
         add_if_not_null(item.address, "street_address", d.address);
-        item.address = remove_if_null(item.address);
         remove_if_empty(item, "address");
 
         item.dates = create_dates_template();
