@@ -52,16 +52,18 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         remove_null_date_fields(item);
 
         item.address = {};
-        address = d.properties.Address;
-        address = address.split(",");
-        if (address.length >= 4) {
-            add_if_not_null(item.address, "street_address", address[0].trim());
-            add_if_not_null(item.address, "city", address[1].trim());
-            add_if_not_null(item.address, "region", address[2].trim());
-            add_if_not_null(item.address, "zipcode", address[3].trim());
-            add_if_not_null(item.address, "country", "Canada");
-        } else {
-            add_if_not_null(item.address, "street_address", address[0]);
+        if (d.properties.Address) {
+            address = d.properties.Address;
+            address = address.split(",");
+            if (address.length >= 4) {
+                add_if_not_null(item.address, "street_address", address[0].trim());
+                add_if_not_null(item.address, "city", address[1].trim());
+                add_if_not_null(item.address, "region", address[2].trim());
+                add_if_not_null(item.address, "zipcode", address[3].trim());
+                add_if_not_null(item.address, "country", "Canada");
+            } else {
+                add_if_not_null(item.address, "street_address", address[0]);
+            }
         }
         remove_if_empty(item, "address");
 

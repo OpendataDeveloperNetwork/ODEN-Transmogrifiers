@@ -45,7 +45,11 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item, "artist", d.properties.Artist);
         add_if_not_null(item, "material", d.properties.Hours);
         add_if_not_null(item, "area", d.properties.Neighborhood);
-        add_if_not_null(item, "image_url", [d.properties.Pic_URL]);
+        item.image_urls = [];
+        if (d.properties.Pic_URL) {
+            item.image_urls.push(d.properties.Pic_URL);
+        }
+        remove_if_empty(item, "image_urls");
 
         item.dates = create_dates_template();
         add_if_not_null(item.dates.installed, "year", d.properties.Year_Sort_FirstYr);
