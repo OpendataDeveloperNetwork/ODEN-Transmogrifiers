@@ -48,7 +48,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
 
         item.dates = create_dates_template();
         add_if_not_null(item.dates.installed, "year", d.date);
-
         remove_null_date_fields(item);
 
         item.details = {}

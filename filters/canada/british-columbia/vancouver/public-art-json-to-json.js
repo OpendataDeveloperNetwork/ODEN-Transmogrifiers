@@ -61,9 +61,8 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.image_urls = [];
         if (d.url) {
             item.image_urls.push(d.url);
-        } else {
-            delete item.image_urls
         }
+        remove_if_empty(item, "image_urls");
 
         // add details sequentially example
         item.details = {};

@@ -44,7 +44,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.coordinates = coordinates;
 
         add_if_not_null(item, "artist", d.artist);
-        item.dates
         add_if_not_null(item, "description", d.desc1);
     
         item.address = {}
@@ -63,14 +62,18 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.image_urls = []
         if (d.website.url) {
             item.image_urls.push(d.website.url);
-        } else {
-            delete item.image_urls;
         }
+        remove_if_empty(item, "image_urls");
 
         item.details = {}
         add_if_not_null(item.details, "art_id", d.art_id);
         add_if_not_null(item.details, "tab_name", d.tab_name);
         add_if_not_null(item.details, "short_description", d.short_desc);
+
+        item.details = remove_if_null(item.details);
+        
+        // check for and remove empty details object
+        remove_if_empty(item, "details");
         
         // skip adding to new data if required field not found
         if (!skip) {
