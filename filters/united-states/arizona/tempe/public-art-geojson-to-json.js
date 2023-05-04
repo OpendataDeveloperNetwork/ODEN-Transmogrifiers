@@ -62,7 +62,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item.details, "desc3", d.properties.Desc3);
         add_if_not_null(item.details, "desc4", d.properties.Desc4);
         add_if_not_null(item.details, "desc5", d.properties.Desc5);
-        remove_if_null(item.details);
+        remove_if_empty(item, "details");
 
         // skip adding to new data if required field not found
         if (!skip) {
