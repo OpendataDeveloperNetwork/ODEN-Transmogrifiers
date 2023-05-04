@@ -44,10 +44,12 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.coordinates = coordinates;
         
         let full_name = "";
-        if(d.primary_artist_first != "NULL" && d.primary_artist_last != "NULL"){
+        if (d.primary_artist_last && d.primary_artist_last != "NULL"){
           full_name = d.primary_artist_first + " " + d.primary_artist_last;
         } else if(d.primary_artist_first != "NULL"){
           full_name = d.primary_artist_first
+        } else if(d.primary_artist_first != "NULL"){
+          full_name = d.primary_artist_last  
         }
         add_if_not_null(item, "artist", full_name);
         
@@ -60,6 +62,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item.address, "city", d.city);
         add_if_not_null(item.address, "state", d.state);
         add_if_not_null(item.address, "zipcode", d.zip_code);
+        remove_if_empty(item, "address")
         
         add_if_not_null(item, "description", d.inscription.replaceAll("/", ""))
         add_if_not_null(item, "material", d.material);

@@ -67,6 +67,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
             item.image_urls.push(image_urls[i])
           }
         }
+        remove_if_empty(item, "image_urls")
 
         // other item.details
         item.details = {};

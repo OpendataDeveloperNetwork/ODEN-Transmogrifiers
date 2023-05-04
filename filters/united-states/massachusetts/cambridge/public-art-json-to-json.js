@@ -47,7 +47,6 @@ const filter = function (data, std_lib, schema, validator, stringify) {
       add_if_not_null(item, "material", d.detailed_m);
       add_if_not_null(item, "type", d.object_typ);
       add_if_not_null(item, "area", d.neighborho);
-      add_if_not_null(item, "image_url", d.photo_webs);
       
       item.dates = create_dates_template();
       regular_date = d.created_da.split("T")[0]
@@ -63,6 +62,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
           item.image_urls.push(image_urls[i])
         }
       }
+      remove_if_empty(item, "image_urls")
       
       //other item.details
       item.details = {};

@@ -44,10 +44,12 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.coordinates = coordinates;
         
         let full_name = ""
-        if(d.properties.Artist_First != null && d.properties.Artist_Last_ != null){
-          full_name = d.properties.Artist_First + " " + d.properties.Artist_Last_
-        }else if(d.properties.Artist_First != null){
-          full_name = d.properties.Artist_First
+        if (d.properties.Artist_First && d.properties.Artist_Last_){
+            full_name = d.properties.Artist_First + " " + d.properties.Artist_Last_
+        }else if(d.properties.Artist_First){
+            full_name = d.properties.Artist_First
+        }else if(d.properties.Artist_Last_){
+            full_name = d.properties.Artist_Last_
         }
         add_if_not_null(item, "artist", full_name);
         
@@ -57,6 +59,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
   
         item.address={};
         add_if_not_null(item.address, "street_address", d.properties.Address);
+        remove_if_empty(item, "address")
   
         add_if_not_null(item, "material", d.properties.Media);
         add_if_not_null(item, "type", d.properties.Type);
@@ -69,6 +72,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
             item.image_urls.push(image_urls[i])
           }
         }
+        remove_if_empty(item, "image_urls")
         
         // other item.details
         item.details = {};
