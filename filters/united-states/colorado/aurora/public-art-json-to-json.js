@@ -1,7 +1,24 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
-    data = JSON.parse(data);
-    data = data.features;
+const filter = function (data, std_lib, schema, validator, stringify) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_null = std_lib.get("remove_if_null");
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+
+    // validate parameters object
+    schema = validate_params(schema, validator);
+
+    if (typeof data === 'string' || data instanceof String) {
+        data = JSON.parse(data);
+    }
+
+    // define new data and errors array
     let new_data = [];
+    let errors = [];
 
     data.map(d => {
         d = d.properties
@@ -26,7 +43,7 @@ const filter = function (data, std_lib, stringify, skip_errors) {
         details.description = d.DESCRIPTION
         details.zip = d.ZIP
         item.details = details
-        
+
         new_data.push(item)
     })
 
