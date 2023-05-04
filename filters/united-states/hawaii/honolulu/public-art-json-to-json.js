@@ -50,8 +50,9 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item, "description", d.description);
         add_if_not_null(item, "area", d.location);
         add_if_not_null(item, "type", d.discipline);
-        item.image_urls = [add_if_not_null(d.imagefile)];
-        remove_if_empty(item, "image_urls");
+        if (d.imagefile) {
+            item.image_urls = [d.imagefile]
+        }
 
         // add details sequentially
         item.details = {}

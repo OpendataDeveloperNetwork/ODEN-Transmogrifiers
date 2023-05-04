@@ -48,16 +48,16 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     remove_if_empty(item, "address")
 
     //check for null name and date
-    if (d.artist_name_and_date !== null) {
+    if (d.artist_name_and_date) {
       let name_and_date = d.artist_name_and_date.split(",");
       add_if_not_null(item, "artist", name_and_date[0]);
       item.dates = create_dates_template();
       add_if_not_null(item.dates.installed, "year", name_and_date[1]);
       remove_null_date_fields(item);
     }
-
-    item.image_urls = [add_if_not_null(d.image_or_artist_site.url)];
-    remove_if_empty(item, "image_urls");
+    if (d.image_or_artist_site) {
+      item.image_urls = [d.image_or_artist_site]
+    }
     
     add_if_not_null(item, "type", d.art_type);
 
