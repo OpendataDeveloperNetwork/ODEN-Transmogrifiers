@@ -47,17 +47,20 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     // check for and remove empty address object
     remove_if_empty(item, "address")
 
-    let name_and_date = d.artist_name_and_date.split(",");
+    //check for null name and date
+    if (d.artist_name_and_date !== null) {
+      let name_and_date = d.artist_name_and_date.split(",");
+      add_if_not_null(item, "artist", name_and_date[0]);
+      item.dates = create_dates_template();
+      add_if_not_null(item.dates.installed, "year", name_and_date[1]);
+      remove_null_date_fields(item);
+    }
 
     item.image_urls = [add_if_not_null(d.image_or_artist_site.url)];
     remove_if_empty(item, "image_urls");
     
-    add_if_not_null(item, "artist", name_and_date[0]);
     add_if_not_null(item, "type", d.art_type);
 
-    item.dates = create_dates_template();
-    add_if_not_null(item.dates.installed, "year", name_and_date[1]);
-    remove_null_date_fields(item);
 
     // skip adding to new data if required field not found
     if (!skip) {
