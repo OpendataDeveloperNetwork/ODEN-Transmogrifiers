@@ -1,29 +1,82 @@
-const filter = function (data, std_lib, stringify, skip_errors) {
+const filter = function (data, std_lib, schema, validator, stringify) {
+    // check for standard library and pull out required functions
+    if (!std_lib) {
+        throw "standard library not provided";
+    }
+    let add_required = std_lib.get("add_required");
+    let add_if_not_null = std_lib.get("add_if_not_null")
+    let remove_if_empty = std_lib.get("remove_if_empty");
+    let validate_params = std_lib.get("validate_params");
+    
+    // validate parameters object
+    schema = validate_params(schema, validator);
+
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
     }
     
     let new_data = [];
-
+    let errors = [];
+    
     data.map(d => {
         let item = {};
-        item.name = d.title;
-        if (item.name === undefined) {
-            console.log(`Data name not found for art with url ${d.url}`);
+        let skip = false;
+
+        let name;
+        let artist;
+
+        const title_field = d.title;
+        if (title_field && title_field.includes("by")) {
+            name_artist = title_field.split("by")
+            name = name_artist[0].replace(/[^a-zA-Z 0-9]+/g,'').trim();
+            artist = name_artist[1].trim(); 
+        } else {
+            name = title_field;
         }
-        let coordinates = { longitude: d.the_geom.coordinates[1], latitude: d.the_geom.coordinates[0]};
-        if (coordinates.longitude === undefined || coordinates.latitude === undefined) {
-            console.log(`Data coordinates not found for art with url ${d.url}`);
+        
+        // add name (required)
+        if (!add_required(item, "name", d, name, errors)) {
+            skip = true;
+        }
+
+        // add coordinates (required)
+        let coordinates = {};
+        if (!add_required(coordinates, "longitude", d, d.the_geom.coordinates[0], errors)) {
+            skip = true;
+        }
+        if (!add_required(coordinates, "latitude", d, d.the_geom.coordinates[1], errors)) {
+            skip = true;
         }
         item.coordinates = coordinates;
-        new_data.push(item);
+
+        //optional fields
+        add_if_not_null(item, "artist", artist);
+        add_if_not_null(item, "description", d.descriptio);
+        add_if_not_null(item, "type", d.type);
+        add_if_not_null(item, "material", d.medium);
+        add_if_not_null(item, "area", d.location);
+        
+        item.address = {};
+        add_if_not_null(item.address, "street_address", d.name);
+        remove_if_empty(item, "address");
+
+        // skip adding to new data if required field not found
+        if (!skip) {
+            let result = validator.validate(item, schema, { required: true });
+            if (!result.valid) {
+                errors.push({type: "validation", validation_result: result, data_entry: d})
+            } else {
+                new_data.push(item);
+            }
+        }
     })
 
+    // return data and convert to string if enabled
     if (stringify) {
-        return JSON.stringify(new_data, null);
+        new_data = JSON.stringify(new_data, null);
     }
 
-    return new_data;
+    return {data: new_data, errors: errors};
 }
 
 return filter;
