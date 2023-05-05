@@ -51,11 +51,11 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         item.address = remove_if_null(item.address);
         remove_if_empty(item, "address");
 
-        item.details = {}
-        add_if_not_null(item.details, "category", d.attributes.CATEGORY);
+        item.misc = {}
+        add_if_not_null(item.misc, "category", d.attributes.CATEGORY);
   
-        // check for and remove empty details object
-        remove_if_empty(item, "details");
+        // check for and remove empty misc object
+        remove_if_empty(item, "misc");
 
         // skip adding to new data if required field not found
         if (!skip) {

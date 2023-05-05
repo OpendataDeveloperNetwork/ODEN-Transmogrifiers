@@ -67,17 +67,17 @@ const add_if_not_null = (dst, dst_field, src) => {
   return false
 }
 
-// takes the whole details object and removes any null values
-// use case: item.details = remove_if_null(details);
-const remove_if_null = function (details_obj) {
-  // go through the details object and remove any null, undefined, length 0, and if its a string with only white spaces (trim begin and end spaces, and if length is 0 then we know that the string is just white spaces)
-  Object.keys(details_obj).forEach(key => {
-    if (details_obj[key] === null || details_obj[key] === undefined || details_obj[key].length <= 0 || (typeof details_obj[key] == "string" && details_obj[key].trim().length === 0)) {
-      delete details_obj[key];
+// takes the whole misc object and removes any null values
+// use case: item.misc = remove_if_null(misc);
+const remove_if_null = function (misc_obj) {
+  // go through the misc object and remove any null, undefined, length 0, and if its a string with only white spaces (trim begin and end spaces, and if length is 0 then we know that the string is just white spaces)
+  Object.keys(misc_obj).forEach(key => {
+    if (misc_obj[key] === null || misc_obj[key] === undefined || misc_obj[key].length <= 0 || (typeof misc_obj[key] == "string" && misc_obj[key].trim().length === 0)) {
+      delete misc_obj[key];
     }
   });
-  // return the details object without null values
-  return details_obj
+  // return the misc object without null values
+  return misc_obj
 }
 
 const remove_if_empty = function (object, field) {

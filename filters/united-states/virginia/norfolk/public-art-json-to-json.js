@@ -73,14 +73,14 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item, "budget", parseInt(properties.budget.replace('$', '').replace(',', '')));
 
 
-        let details = {};
-        details.location = properties.location;
-        details.media = properties.media;
-        details.category = properties.category;
-        details.credit = properties.credit;
-        details.geocoded_column = properties.geocoded_column;
-        item.details = remove_if_null(details);
-        remove_if_empty(item, "details");
+        let misc = {};
+        misc.location = properties.location;
+        misc.media = properties.media;
+        misc.category = properties.category;
+        misc.credit = properties.credit;
+        misc.geocoded_column = properties.geocoded_column;
+        item.misc = remove_if_null(misc);
+        remove_if_empty(item, "misc");
         
         // skip adding to new data if required field not found
         if (!skip) {

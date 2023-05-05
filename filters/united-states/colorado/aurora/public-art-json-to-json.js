@@ -36,13 +36,13 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
         item.coordinates = coordinates
 
-        let details = {}
-        details.title = d.ARTWORK_TITLE
-        details.artist = d.ARTIST
-        details.address = d.ADDRESS
-        details.description = d.DESCRIPTION
-        details.zip = d.ZIP
-        item.details = details
+        let misc = {}
+        misc.title = d.ARTWORK_TITLE
+        misc.artist = d.ARTIST
+        misc.address = d.ADDRESS
+        misc.description = d.DESCRIPTION
+        misc.zip = d.ZIP
+        item.misc = misc
 
         new_data.push(item)
     })

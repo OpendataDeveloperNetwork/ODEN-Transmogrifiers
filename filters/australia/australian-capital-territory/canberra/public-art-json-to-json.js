@@ -50,11 +50,9 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item.dates.installed, "year", d.date);
         remove_null_date_fields(item);
 
-        item.details = {}
-        add_if_not_null(item.details, "acquisition_details", d.acquisition_details)
-        
-        // check for and remove empty details object
-        remove_if_empty(item, "details");
+        item.misc = {}
+        add_if_not_null(item.misc, "acquisition_details", d.acquisition_details)
+        remove_if_empty(item, "misc");
     
         // skip adding to new data if required field not found
         if (!skip) {

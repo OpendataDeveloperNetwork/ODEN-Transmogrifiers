@@ -66,14 +66,14 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
 
         // add optional detail fields
-        let details = {};
+        let misc = {};
 
-        details.saction_id = d.sac_id;
-        details.project_name = d.project;
-        details.classification = d.classification;
-        details.measurement = d.measurements;
-        item.details = remove_if_null(details);
-        remove_if_empty(item, "details")
+        misc.saction_id = d.sac_id;
+        misc.project_name = d.project;
+        misc.classification = d.classification;
+        misc.measurement = d.measurements;
+        item.misc = remove_if_null(misc);
+        remove_if_empty(item, "misc")
 
 
         if (!skip) {
