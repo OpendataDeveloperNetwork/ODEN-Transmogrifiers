@@ -63,7 +63,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
         remove_if_empty(item, "image_urls");
 
-        // For miscellaneous misc, you can add them using one of the following two ways:
+        // For misc details, you can add them using one of the following two ways:
         // 1) add misc sequentially example
         item.misc = {};
         add_if_not_null(item.misc, "artists_description", d.artistprojectstatement);    
