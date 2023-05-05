@@ -24,4 +24,6 @@ project
 ```
 The country, region, and city are placeholders for the actual city's information.
 The files located under each city follow the format of: 
-*what the filter is used for*-*input type*-to-*output type*.js
+`[what_the_filter_is_used_for]-[input_type]-to-[output_type].js`
+
+For example, `bike-paths-geojson-to-json.js` or `public-restrooms-json-to-json.js`.
