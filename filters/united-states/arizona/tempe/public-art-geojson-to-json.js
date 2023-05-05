@@ -59,14 +59,14 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         add_if_not_null(item.address, "street_address", d.properties.Address);
         remove_if_empty(item, "address");
 
-        item.details = {}
-        add_if_not_null(item.details, "developer", d.properties.Developer);
-        add_if_not_null(item.details, "desc1", d.properties.Desc1);
-        add_if_not_null(item.details, "desc2", d.properties.Desc2);
-        add_if_not_null(item.details, "desc3", d.properties.Desc3);
-        add_if_not_null(item.details, "desc4", d.properties.Desc4);
-        add_if_not_null(item.details, "desc5", d.properties.Desc5);
-        remove_if_empty(item, "details");
+        item.misc = {}
+        add_if_not_null(item.misc, "developer", d.properties.Developer);
+        add_if_not_null(item.misc, "desc1", d.properties.Desc1);
+        add_if_not_null(item.misc, "desc2", d.properties.Desc2);
+        add_if_not_null(item.misc, "desc3", d.properties.Desc3);
+        add_if_not_null(item.misc, "desc4", d.properties.Desc4);
+        add_if_not_null(item.misc, "desc5", d.properties.Desc5);
+        remove_if_empty(item, "misc");
 
         // skip adding to new data if required field not found
         if (!skip) {

@@ -63,18 +63,18 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
         remove_if_empty(item, "image_urls");
 
-        // add details sequentially example
-        item.details = {};
-        add_if_not_null(item.details, "artists_description", d.artistprojectstatement);    
-        add_if_not_null(item.details, "status", d.status);
-        add_if_not_null(item.details, "photo_credit", d.photocredits);
-        add_if_not_null(item.details, "site_name", d.sitename);
-        add_if_not_null(item.details, "location_site", d.locationonsite);
-        add_if_not_null(item.details, "geo_local_area", d.geo_local_area);
+        // For misc details, you can add them using one of the following two ways:
+        // 1) add misc sequentially example
+        item.misc = {};
+        add_if_not_null(item.misc, "artists_description", d.artistprojectstatement);    
+        add_if_not_null(item.misc, "status", d.status);
+        add_if_not_null(item.misc, "photo_credit", d.photocredits);
+        add_if_not_null(item.misc, "site_name", d.sitename);
+        add_if_not_null(item.misc, "location_site", d.locationonsite);
+        add_if_not_null(item.misc, "geo_local_area", d.geo_local_area);
 
-        // reset details for batch example
-        // add details batch example
-        item.details = {
+        // 2) add misc batch example
+        item.misc = {
             artists_description: d.artistprojectstatement,
             status: d.status,
             photo_credit: d.photocredits,
@@ -83,10 +83,10 @@ const filter = function (data, std_lib, schema, validator, stringify) {
             geo_local_area: d.geo_local_area,         
         };
 
-        item.details = remove_if_null(item.details);
+        item.misc = remove_if_null(item.misc);
   
-        // check for and remove empty details object
-        remove_if_empty(item, "details");
+        // check for and remove empty misc object
+        remove_if_empty(item, "misc");
   
         // skip adding to new data if required field not found
         if (!skip) {

@@ -54,16 +54,16 @@ const filter = function (data, std_lib, schema, validator, stringify) {
             item.image_urls = [d.imagefile]
         }
 
-        // add details sequentially
-        item.details = {}
+        // add detamiscils sequentially
+        item.misc = {}
 
-        add_if_not_null(item.details, "credit", d.credit);
-        add_if_not_null(item.details, "objectid", d.objectid);
-        add_if_not_null(item.details, "access", d.access);
+        add_if_not_null(item.misc, "credit", d.credit);
+        add_if_not_null(item.misc, "objectid", d.objectid);
+        add_if_not_null(item.misc, "access", d.access);
 
-        item.details = remove_if_null(item.details);
-        // check for and remove empty details object
-        remove_if_empty(item, "details");
+        item.misc = remove_if_null(item.misc);
+        // check for and remove empty misc object
+        remove_if_empty(item, "misc");
 
         // skip adding to new data if required field not found
         if (!skip) {

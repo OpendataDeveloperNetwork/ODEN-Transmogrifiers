@@ -59,20 +59,20 @@ const filter = function (data, std_lib, schema, validator, stringify) {
     add_if_not_null(item.dates.installed, "date_string", properties.YearInstalled)
     remove_null_date_fields(item);
 
-    let details = {};
-    details.item_name = properties.Item_Name
-    details.condition = properties.Condition
-    details.approximate_value = properties.Approximate_value
-    details.stock_item_or_custom_item = properties.Stock_Item_or_Custom_Item
-    details.facility_id = properties.FACILITYID
-    details.x_coord = properties.XCoord
-    details.y_coord = properties.YCoord
-    details.category_main_type = properties.CategoryMainType
-    details.owner_private = properties.OwnerPrivate
-    details.commission_amount = properties.CommissionAmount
-    item.details = remove_if_null(details);
-    // check for and remove empty details object
-    remove_if_empty(item, "details");
+    let misc = {};
+    misc.item_name = properties.Item_Name
+    misc.condition = properties.Condition
+    misc.approximate_value = properties.Approximate_value
+    misc.stock_item_or_custom_item = properties.Stock_Item_or_Custom_Item
+    misc.facility_id = properties.FACILITYID
+    misc.x_coord = properties.XCoord
+    misc.y_coord = properties.YCoord
+    misc.category_main_type = properties.CategoryMainType
+    misc.owner_private = properties.OwnerPrivate
+    misc.commission_amount = properties.CommissionAmount
+    item.misc = remove_if_null(misc);
+    // check for and remove empty misc object
+    remove_if_empty(item, "misc");
 
     // skip adding to new data if required field not found
     if (!skip) {

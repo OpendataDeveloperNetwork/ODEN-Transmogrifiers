@@ -64,15 +64,15 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
         remove_if_empty(item, "image_urls");
 
-        item.details = {}
-        add_if_not_null(item.details, "art_id", d.art_id);
-        add_if_not_null(item.details, "tab_name", d.tab_name);
-        add_if_not_null(item.details, "short_description", d.short_desc);
+        item.misc = {}
+        add_if_not_null(item.misc, "art_id", d.art_id);
+        add_if_not_null(item.misc, "tab_name", d.tab_name);
+        add_if_not_null(item.misc, "short_description", d.short_desc);
 
-        item.details = remove_if_null(item.details);
-        
-        // check for and remove empty details object
-        remove_if_empty(item, "details");
+        item.misc = remove_if_null(item.misc);
+
+        // check for and remove empty misc object
+        remove_if_empty(item, "misc");
         
         // skip adding to new data if required field not found
         if (!skip) {

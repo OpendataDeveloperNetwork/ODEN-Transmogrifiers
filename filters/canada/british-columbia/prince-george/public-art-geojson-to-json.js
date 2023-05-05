@@ -70,7 +70,7 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         }
         remove_if_empty(item, "image_urls");
 
-        item.details = {
+        item.misc = {
             status: d.properties.LifeCycleStatus,
             administrative_area: d.properties.AdministrativeArea,
             asset_manager: d.properties.AssetManager,
@@ -90,11 +90,11 @@ const filter = function (data, std_lib, schema, validator, stringify) {
         };
 
         if (d.properties.Year) {
-            item.details.year = parseInt(d.properties.Year);
+            item.misc.year = parseInt(d.properties.Year);
         }
 
-        item.details = remove_if_null(item.details);
-        remove_if_empty(item, "details");
+        item.misc = remove_if_null(item.misc);
+        remove_if_empty(item, "misc");
 
         // skip adding to new data if required field not found
         if (!skip) {
