@@ -1,13 +1,12 @@
 const filter = function (data, params) {
     // check for standard library and pull out required functions
     if (!params.library) {
-        throw "ODEN ODEN library not provided";
+        throw "ODEN library not provided";
     }
     let add_required = params.library.get("add_required");
     let add_if_not_null = params.library.get("add_if_not_null")
     let remove_if_null = params.library.get("remove_if_null");
     let remove_if_empty = params.library.get("remove_if_empty");
-    let validate_params = params.library.get("validate_params");
     let create_dates_template = params.library.get("create_dates_template");
     let remove_null_date_fields = params.library.get("remove_null_date_fields");
 
