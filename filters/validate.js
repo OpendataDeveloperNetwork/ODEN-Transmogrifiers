@@ -12,15 +12,15 @@ const filter = function (data, params) {
         let json_schema = JSON.parse(params.schema);
         schema = json_schema;
         type = "JSON";
-        validator = params.json_validator;
+        validator = params["JSON-validator"];
     } catch { };
 
     // check for unsupported schema type (!schema) or missing validator for schema type (!validator)
     if (!schema) {
-        "unknown/unsupported schema type"
+        "validate: unknown/unsupported schema type"
     }
     if (!validator) {
-        throw "validator for schema type not found"
+        throw "validate: validator for schema type not found"
     }
 
     let valid_data = [];
@@ -36,7 +36,7 @@ const filter = function (data, params) {
                 break;
             }
             default: {
-                throw "data type not supported";
+                throw "validate: data type not supported";
             }
         }
     })

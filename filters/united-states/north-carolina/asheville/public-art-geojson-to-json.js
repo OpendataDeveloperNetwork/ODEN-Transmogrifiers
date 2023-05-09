@@ -1,15 +1,15 @@
 const filter = function (data, params) {
     // check for standard library and pull out required functions
-    if (!params.lib) {
+    if (!params.library) {
         throw "ODEN ODEN library not provided";
     }
-    let add_required = params.lib.get("add_required");
-    let add_if_not_null = params.lib.get("add_if_not_null")
-    let remove_if_null = params.lib.get("remove_if_null");
-    let remove_if_empty = params.lib.get("remove_if_empty");
-    let validate_params = params.lib.get("validate_params");
-    let create_dates_template = params.lib.get("create_dates_template");
-    let remove_null_date_fields = params.lib.get("remove_null_date_fields");
+    let add_required = params.library.get("add_required");
+    let add_if_not_null = params.library.get("add_if_not_null")
+    let remove_if_null = params.library.get("remove_if_null");
+    let remove_if_empty = params.library.get("remove_if_empty");
+    let validate_params = params.library.get("validate_params");
+    let create_dates_template = params.library.get("create_dates_template");
+    let remove_null_date_fields = params.library.get("remove_null_date_fields");
 
     // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
