@@ -1,7 +1,7 @@
 const filter = function (data, params) {
     // check for standard library and pull out required functions
     if (!params.lib) {
-        throw "ODEN ODEN library not provided";
+        throw "ODEN library not provided";
     }
     let add_required = params.lib.get("add_required");
     let add_if_not_null = params.lib.get("add_if_not_null")
