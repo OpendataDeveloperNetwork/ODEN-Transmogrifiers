@@ -1,16 +1,12 @@
-const filter = function (data, std_lib, schema, validator, stringify) {
+const filter = function (data, params) {
     // check for standard library and pull out required functions
-    if (!std_lib) {
+    if (!params.std_lib) {
         throw "standard library not provided";
     }
-    let add_required = std_lib.get("add_required");
-    let add_if_not_null = std_lib.get("add_if_not_null")
-    let remove_if_null = std_lib.get("remove_if_null");
-    let remove_if_empty = std_lib.get("remove_if_empty");
-    let validate_params = std_lib.get("validate_params");
-
-    // validate parameters object
-    schema = validate_params(schema, validator);
+    let add_required = params.std_lib.get("add_required");
+    let add_if_not_null = params.std_lib.get("add_if_not_null")
+    let remove_if_null = params.std_lib.get("remove_if_null");
+    let remove_if_empty = params.std_lib.get("remove_if_empty");
 
     // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
@@ -56,18 +52,9 @@ const filter = function (data, std_lib, schema, validator, stringify) {
 
         // skip adding to new data if required field not found
         if (!skip) {
-            let result = validator.validate(item, schema, { required: true });
-            if (!result.valid) {
-                errors.push({ type: "validation", validation_result: result, data_entry: d })
-            } else {
-                new_data.push(item);
-            }
+            new_data.push(item);
         }
     })
-
-    if (stringify) {
-        return JSON.stringify(new_data, null);
-    }
 
     return new_data;
 }
