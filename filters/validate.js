@@ -33,6 +33,7 @@ const filter = function (data, params) {
                 } else {
                     valid_data.push(d);
                 }
+                break;
             }
             default: {
                 throw "data type not supported";
