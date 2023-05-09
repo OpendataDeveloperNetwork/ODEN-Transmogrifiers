@@ -1,12 +1,12 @@
 const filter = function (data, params) {
     let stringified = false;
+    let new_data;
     try {
         let indent = "";
         if (params["JSON-indent"] === true) {
             indent = "    ";
         }
-        let new_data = JSON.stringify(data, null, indent);
-        data = new_data;
+        new_data = JSON.stringify(data, null, indent);
         stringified = true;
     } catch {};
 
@@ -14,6 +14,6 @@ const filter = function (data, params) {
         throw "stringify: unknown/unsupported data type"
     }
 
-    return data;
+    return new_data;
 }
 return filter;
