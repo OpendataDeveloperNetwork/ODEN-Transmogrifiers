@@ -6,7 +6,7 @@ const filter = function (data, params) {
             indent = "    ";
         }
         let new_data = JSON.stringify(data, null, indent);
-        data.data = new_data;
+        data = new_data;
         stringified = true;
     } catch {};
 
