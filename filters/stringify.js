@@ -3,7 +3,7 @@ const filter = function (data, params) {
     let new_data;
     try {
         let indent = "";
-        if (params["JSON-indent"] === true) {
+        if (params["indent"] === true) {
             indent = "    ";
         }
         new_data = JSON.stringify(data, null, indent);
