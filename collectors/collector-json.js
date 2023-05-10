@@ -27,8 +27,7 @@ const collector_json = function (data, params) {
         data_and_errors = JSON.stringify(data_and_errors, null, "    ");
     }else if (params["stringify"] === true && !params.indent) {
         data_and_errors = JSON.stringify(data_and_errors, null, "");
-    } else {
-        data_and_errors = JSON.stringify(data_and_errors, null);
-    }
+    } 
     return data_and_errors;
 }
+return collector_json;
