@@ -17,9 +17,9 @@ const collector_json = function (data, params) {
 
     let data_and_errors = {data: combined_data, errors: combined_errors};
 
-    if (params.stringify && params.indent) {
+    if (params["stringify"] === true && params["indent"] === true) {
         data_and_errors = JSON.stringify(data_and_errors, null, "    ");
-    }else if (params.stringify && !params.indent) {
+    }else if (params["stringify"] === true && !params.indent) {
         data_and_errors = JSON.stringify(data_and_errors, null, "");
     } else {
         data_and_errors = JSON.stringify(data_and_errors, null);
