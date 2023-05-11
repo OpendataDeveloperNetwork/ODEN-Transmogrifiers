@@ -5,6 +5,8 @@ const collector_json = function (datas, params) {
     for (let data of datas) {
         if (typeof data === 'string' || data instanceof String) {
             json_data.push(JSON.parse(data));
+        } else {
+            json_data.push(data);
         }
     }
 
