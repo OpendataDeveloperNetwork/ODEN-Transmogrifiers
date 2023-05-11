@@ -1,12 +1,9 @@
 const collector_json = function (datas, params) {
     // convert JSON data string to object form
 
-    let json_data = [];
-    for (let data of datas) {
+    for (let [i, data] of datas.entries()) {
         if (typeof data === 'string' || data instanceof String) {
-            json_data.push(JSON.parse(data));
-        } else {
-            json_data.push(data);
+            data[i] = JSON.parse(data);
         }
     }
 
