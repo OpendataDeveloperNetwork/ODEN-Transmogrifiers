@@ -13,7 +13,7 @@ const collector_json = function (datas, params) {
 
     // for each entry in the data go through valid entries and errors and add
     // them to the combined arrays
-    data.map(d => {
+    datas.map(d => {
         d.data.map(valid_entry => {
             combined_data.push(valid_entry)
         })
