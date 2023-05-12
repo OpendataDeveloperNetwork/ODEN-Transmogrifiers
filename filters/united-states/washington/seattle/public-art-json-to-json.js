@@ -59,7 +59,7 @@ const filter = function (data, params) {
         if (d.date) {
             item.dates = create_dates_template();
             add_if_not_null(item.dates.installed, "date_string", d.date)
-            remove_null_date_fields(item.dates);
+            remove_null_date_fields(item);
         }
 
         // add optional detail fields
