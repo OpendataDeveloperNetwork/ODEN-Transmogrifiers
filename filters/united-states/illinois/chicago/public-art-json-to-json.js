@@ -60,7 +60,7 @@ const filter = function (data, params) {
         }
     })
 
-    return new_data;
+    return { data: new_data, errors: errors };
 }
 
 return filter;
