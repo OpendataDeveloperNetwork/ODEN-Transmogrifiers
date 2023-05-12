@@ -17,6 +17,7 @@ const filter = function (data, params) {
     let new_data = [];
     let errors = [];
 
+    console.log(data)
 
     data.map(d => {
         let item = {};
