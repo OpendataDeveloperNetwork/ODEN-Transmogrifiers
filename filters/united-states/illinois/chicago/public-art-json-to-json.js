@@ -18,7 +18,6 @@ const filter = function (data, params) {
     let errors = [];
 
     data.map(d => {
-        console.log(d)
         let item = {};
         let skip = false;
 
