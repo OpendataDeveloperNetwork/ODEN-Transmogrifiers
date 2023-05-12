@@ -10,7 +10,6 @@ const filter = function (data, params) {
     let create_dates_template = params.library.get("create_dates_template");
     let remove_null_date_fields = params.library.get("remove_null_date_fields");
     
-    console.log(typeof(data))
     // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
@@ -20,8 +19,6 @@ const filter = function (data, params) {
     let new_data = [];
     let errors = [];
     
-    console.log("typeof data after parsing:")
-    console.log(typeof(data))
     // iterate through each data entry
     data.map(d => {
         let item = {};
