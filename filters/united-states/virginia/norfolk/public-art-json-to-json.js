@@ -46,8 +46,8 @@ const filter = function (data, params) {
         add_if_not_null(item, "artist", d.artist);
         if (d.installation_date) {
             item.dates = create_dates_template();
-            if (d.installation_date.includes("/\\")) {
-                let date_split = d.installation_date.split("/\\");
+            if (d.installation_date.includes("/")) {
+                let date_split = d.installation_date.split("/");
                 add_if_not_null(item.dates.installed, "month", date_split[0]);
                 add_if_not_null(item.dates.installed, "day", date_split[1]);
                 add_if_not_null(item.dates.installed, "year", date_split[2]);
