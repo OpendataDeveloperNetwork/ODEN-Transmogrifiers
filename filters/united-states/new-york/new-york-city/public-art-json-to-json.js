@@ -50,7 +50,7 @@ const filter = function (data, params) {
         add_if_not_null(item, "artist", full_name);
 
         item.dates = create_dates_template();
-        add_if_not_null(item.dates.created, "year", d.date_created);
+        add_if_not_null(item.dates.created, "year", d.date_created !== "NULL" ? d.date_created : null );
         remove_null_date_fields(item)
 
         item.address = {};
@@ -61,10 +61,10 @@ const filter = function (data, params) {
         remove_if_null(item.address);
         remove_if_empty(item, "address")
 
-        add_if_not_null(item, "description", d.inscription.replaceAll("/", ""))
-        add_if_not_null(item, "material", d.material);
-        add_if_not_null(item, "type", d.artwork_type1);
-        add_if_not_null(item, "area", d.borough);
+        add_if_not_null(item, "description", d.inscription.replaceAll("/", "") !== "NULL" ? d.inscription.replaceAll("/", "") : null)
+        add_if_not_null(item, "material", d.material !== "NULL" ? d.material : null);
+        add_if_not_null(item, "type", d.artwork_type1 !== "NULL" ? d.artwork_type1 : null);
+        add_if_not_null(item, "area", d.borough) !== "NULL" ? d.borough : null;
 
         // other item.misc
         item.misc = {};
