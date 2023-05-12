@@ -22,6 +22,7 @@ const filter = function (data, params) {
     console.log(typeof(data))
 
     data.map(d => {
+        console.log(d)
         let item = {};
         let skip = false;
 
