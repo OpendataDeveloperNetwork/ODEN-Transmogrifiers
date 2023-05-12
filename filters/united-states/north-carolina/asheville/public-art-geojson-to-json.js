@@ -59,10 +59,12 @@ const filter = function (data, params) {
         add_if_not_null(item, "type", d.properties.type);
 
         item.image_urls = [];
-        image_urls = [d.properties.image];
-        for (let i = 0; i < image_urls.length; i++) {
-            if (image_urls[i] != null) {
-                item.image_urls.push(image_urls[i])
+        if(d.properties.image == "string" && d.properties.image.trim().length !== 0){
+            image_urls = [d.properties.image];
+            for (let i = 0; i < image_urls.length; i++) {
+                if (image_urls[i] != null) {
+                    item.image_urls.push(image_urls[i])
+                }
             }
         }
         remove_if_empty(item, "image_urls")
