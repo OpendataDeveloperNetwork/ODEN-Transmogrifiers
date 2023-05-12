@@ -39,7 +39,9 @@ const filter = function (data, params) {
         }
         item.coordinates = coordinates;
 
-        add_if_not_null(item, "artist", d.properties.artist);
+        if(d.properties.artist == "string" && d.properties.artist.trim().length !== 0){
+            add_if_not_null(item, "artist", d.properties.artist);
+        }
 
         item.dates = create_dates_template();
         let unix_timestamp = d.properties.edit_date

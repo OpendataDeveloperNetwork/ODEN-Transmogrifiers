@@ -50,8 +50,8 @@ const filter = function (data, params) {
       item.dates = create_dates_template();
       if (name_and_date[1]) {
         add_if_not_null(item.dates.installed, "year", name_and_date[1]);
-        remove_null_date_fields(item);
       }
+      remove_null_date_fields(item);
     }
     if (d.image_or_artist_site) {
       item.image_urls = [d.image_or_artist_site]
