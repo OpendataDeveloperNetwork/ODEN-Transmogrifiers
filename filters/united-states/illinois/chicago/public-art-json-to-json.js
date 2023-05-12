@@ -8,6 +8,7 @@ const filter = function (data, params) {
     let remove_if_null = params.library.get("remove_if_null");
     let remove_if_empty = params.library.get("remove_if_empty");
 
+    console.log(typeof(data))
     // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
@@ -17,7 +18,7 @@ const filter = function (data, params) {
     let new_data = [];
     let errors = [];
 
-    console.log(data)
+    console.log("typeof data after parsing:")
     console.log(typeof(data))
 
     data.map(d => {
