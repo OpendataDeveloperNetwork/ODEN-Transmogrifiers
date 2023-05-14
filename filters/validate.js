@@ -10,15 +10,18 @@ const filter = function (data, params) {
     let schemaType;
     let validatorType;
     try {
+        console.log("PARSING SCHEMA");
         let json_schema = JSON.parse(params.schema);
         schema = json_schema;
         schemaType = "json";
 
+        console.log("SELECTING VALIDATOR");
         if (params["jsonschema"]) {
             validator = params["jsonschema"];
             validatorType = "jsonschema";
         } else if (params["ajv"]) {
-            validator = params["ajv"].compileSchema(params.schema);
+            console.log("AJV");
+            validator = params["ajv"].compileSchema(schema);
             validatorType = "ajv";
         }
     } catch { };
@@ -46,6 +49,7 @@ const filter = function (data, params) {
                         break;
                     }
                     case "ajv": {
+                        console.log("RUNNING AJV ON" + JSON.stringify(d, null));
                         let valid = validator(d);
                         if (!valid) {
                             data.errors.push({ type: "validate-json", validation_result: validator.errors, data_entry: d });
