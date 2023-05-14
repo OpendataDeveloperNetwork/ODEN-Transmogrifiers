@@ -22,6 +22,8 @@ const filter = function (data, params) {
 
     output_obj.entries = [];
 
+    //force raw to update
+
     let category = params.category
     data.map((item) => {
         if (item.labels.category === category) {
