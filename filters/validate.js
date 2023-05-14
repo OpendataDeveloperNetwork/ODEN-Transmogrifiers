@@ -22,7 +22,7 @@ const filter = function (data, params) {
             validatorType = "jsonschema";
         } else if (params["ajv"]) {
             console.log("AJV");
-            validator = params["ajv"].compileSchema(schema);
+            validator = params["ajv"].compile(schema);
             validatorType = "ajv";
             console.log("COMPILED SCHEMA");
         }
