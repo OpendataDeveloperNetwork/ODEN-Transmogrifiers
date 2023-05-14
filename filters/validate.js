@@ -14,6 +14,7 @@ const filter = function (data, params) {
         let json_schema = JSON.parse(params.schema);
         schema = json_schema;
         schemaType = "json";
+        console.log("SCHEMA: " + schema);
 
         console.log("SELECTING VALIDATOR");
         if (params["jsonschema"]) {
@@ -23,6 +24,7 @@ const filter = function (data, params) {
             console.log("AJV");
             validator = params["ajv"].compileSchema(schema);
             validatorType = "ajv";
+            console.log("COMPILED SCHEMA");
         }
     } catch { };
 
