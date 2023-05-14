@@ -1,7 +1,7 @@
 const library_url = "https://raw.githubusercontent.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/dev/libraries/standard.js";
 const collector_url = "https://raw.githubusercontent.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/dev/collectors/collector-json.js";
-const label_url = "https://github.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/blob/dev/filters/label.js";
-const validate_url = "https://github.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/blob/dev/filters/validate.js";
+const label_url = "https://raw.githubusercontent.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/dev/filters/label.js";
+const validate_url = "https://raw.githubusercontent.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/dev/filters/validate.js";
 const strigify_url = "https://raw.githubusercontent.com/OpendataDeveloperNetwork/ODEN-Transmogrifiers/dev/filters/stringify.js";
 
 const filter = function (data, params) {
