@@ -9,14 +9,18 @@ const filter = function (data, params) {
         data = JSON.parse(data);
     }
 
-    let output_obj = {schema: "", entries: []};
+    let output_obj = {};
     
-    collector_filter = {"func": collector_url};
-    validate_filter = {"func": validate_url, params: {"validator": "json"}};
-    strigify_filter = {"func": strigify_url, params: {indent: true}};
+    collector_filter = {func: collector_url};
+    validate_filter = {func: validate_url, params: {validator: "json"}};
+    strigify_filter = {func: strigify_url, params: {indent: true}};
+    
     output_obj.filters = [collector_filter, validate_filter, strigify_filter];
 
-    output_obj.sinks = [{"func": "file_write", params: {"path": "public-art-data.json"}}];
+    output_obj.sinks = [{func: "file_write", params: {path: "public-art-data.json"}}];
+
+    output_obj.schema = "";
+    output_obj.entries = [];
 
     let category = params.category
     data.map((item) => {
@@ -28,7 +32,9 @@ const filter = function (data, params) {
                 entry_obj.source = {func: "url_read", params: {path: item.data.datasets.json.url}};
             }
             if (item.data.datasets.json.filters.json){
-                entry_obj.filters = {func: item.data.datasets.json.filters.json, params:{library: library_url}};
+                standardize_filter = {func: item.data.datasets.json.filters.json, params:{"library": library_url}};
+                label_filter = {func: label_url, params: {labels: item.labels}};
+                entry_obj.filters = {};
             }
             output_obj.entries.push(entry_obj);
         }
