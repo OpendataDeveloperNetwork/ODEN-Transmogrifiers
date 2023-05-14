@@ -3,7 +3,6 @@ const collector_json = function (datas, params) {
 
     for (let [i, data] of datas.entries()) {
         if (typeof data === 'string' || data instanceof String) {
-            console.log("TEST" + data);
             datas[i] = JSON.parse(data);
         }
     }
