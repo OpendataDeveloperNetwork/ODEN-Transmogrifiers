@@ -22,8 +22,6 @@ const filter = function (data, params) {
 
     schema_entry_obj.entries = [];
 
-    //force raw to update
-
     let category = params.category
     data.map((item) => {
         if (item.labels.category === category) {
