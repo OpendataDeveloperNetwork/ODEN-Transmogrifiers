@@ -9,7 +9,8 @@ const filter = function (data, params) {
         data = JSON.parse(data);
     }
 
-    let output_obj = {};
+    // ordered specifically for readablity
+    let output_obj = {schema: ""};
     
     collector_filter = {func: collector_url};
     validate_filter = {func: validate_url, params: {validator: "json"}};
@@ -19,7 +20,6 @@ const filter = function (data, params) {
 
     output_obj.sinks = [{func: "file_write", params: {path: "public-art-data.json"}}];
 
-    output_obj.schema = "";
     output_obj.entries = [];
 
     let category = params.category
@@ -28,14 +28,25 @@ const filter = function (data, params) {
             output_obj.schema = item.data.schema;
 
             let entry_obj = {};
+            
+            // source
             if (item.data.datasets.json.url){
                 entry_obj.source = {func: "url_read", params: {path: item.data.datasets.json.url}};
             }
+            
+            // filters
+            entry_obj.filters = [];
+            
+            // standardize filter
             if (item.data.datasets.json.filters.json){
                 standardize_filter = {func: item.data.datasets.json.filters.json, params:{"library": library_url}};
-                label_filter = {func: label_url, params: {labels: item.labels}};
-                entry_obj.filters = {};
+                entry_obj.filters.push(standardize_filter);
             }
+
+            // label filter
+            label_filter = {func: label_url, params: {labels: item.labels}};
+            output_obj.filters.push(label_filter);
+            
             output_obj.entries.push(entry_obj);
         }
     })
