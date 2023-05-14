@@ -10,24 +10,24 @@ const filter = function (data, params) {
     }
 
     // ordered specifically for readablity
-    let output_obj = {schema: ""};
+    let schema_entry_obj = {schema: ""};
     
     collector_filter = {func: collector_url};
     validate_filter = {func: validate_url, params: {validator: "json"}};
     strigify_filter = {func: strigify_url, params: {indent: true}};
     
-    output_obj.filters = [collector_filter, validate_filter, strigify_filter];
+    schema_entry_obj.filters = [collector_filter, validate_filter, strigify_filter];
 
-    output_obj.sinks = [{func: "file_write", params: {path: "public-art-data.json"}}];
+    schema_entry_obj.sinks = [{func: "file_write", params: {path: "public-art-data.json"}}];
 
-    output_obj.entries = [];
+    schema_entry_obj.entries = [];
 
     //force raw to update
 
     let category = params.category
     data.map((item) => {
         if (item.labels.category === category) {
-            output_obj.schema = item.data.schema;
+            schema_entry_obj.schema = item.data.schema;
 
             let entry_obj = {};
             
@@ -49,9 +49,9 @@ const filter = function (data, params) {
             label_filter = {func: label_url, params: {labels: item.labels}};
             entry_obj.filters.push(label_filter);
             
-            output_obj.entries.push(entry_obj);
+            schema_entry_obj.entries.push(entry_obj);
         }
     })
-    return output_obj;
+    return [schema_entry_obj];
 }
 return filter;
