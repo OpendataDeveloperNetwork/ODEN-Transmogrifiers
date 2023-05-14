@@ -45,7 +45,7 @@ const filter = function (data, params) {
 
             // label filter
             label_filter = {func: label_url, params: {labels: item.labels}};
-            output_obj.filters.push(label_filter);
+            entry_obj.filters.push(label_filter);
             
             output_obj.entries.push(entry_obj);
         }
