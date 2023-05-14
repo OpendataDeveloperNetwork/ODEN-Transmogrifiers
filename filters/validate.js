@@ -18,7 +18,7 @@ const filter = function (data, params) {
             validator = params["jsonschema"];
             validatorType = "jsonschema";
         } else if (params["ajv"]) {
-            validator = params["ajv"].compileSchema(schema);
+            validator = params["ajv"].compileSchema(params.schema);
             validatorType = "ajv";
         }
     } catch { };
