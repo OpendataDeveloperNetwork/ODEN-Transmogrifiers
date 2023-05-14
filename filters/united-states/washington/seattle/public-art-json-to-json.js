@@ -42,7 +42,9 @@ const filter = function (data, params) {
         add_if_not_null(item, "artist", artist_full_name);
 
         // add defined field
-        add_if_not_null(item, "description", d.description);
+        if(d.description != "''") {
+            add_if_not_null(item, "description", d.description);
+        }
         add_if_not_null(item, "material", d.media);
         item.address = {};
         if (d.geolocation.human_address) {
@@ -57,6 +59,7 @@ const filter = function (data, params) {
         if (d.date) {
             item.dates = create_dates_template();
             add_if_not_null(item.dates.installed, "date_string", d.date)
+            remove_null_date_fields(item);
         }
 
         // add optional detail fields

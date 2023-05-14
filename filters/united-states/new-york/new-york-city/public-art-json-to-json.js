@@ -50,26 +50,27 @@ const filter = function (data, params) {
         add_if_not_null(item, "artist", full_name);
 
         item.dates = create_dates_template();
-        add_if_not_null(item.dates.created, "year", d.date_created);
+        add_if_not_null(item.dates.created, "year", d.date_created !== "NULL" ? d.date_created : null );
         remove_null_date_fields(item)
 
         item.address = {};
-        add_if_not_null(item.address, "street_address", d.address);
-        add_if_not_null(item.address, "city", d.city);
-        add_if_not_null(item.address, "state", d.state);
-        add_if_not_null(item.address, "zipcode", d.zip_code);
+        add_if_not_null(item.address, "street_address", d.address !== "NULL" ? d.address : null);
+        add_if_not_null(item.address, "city", d.city !== "NULL" ? d.city : null);
+        add_if_not_null(item.address, "state", d.state !== "NULL" ? d.state : null);
+        add_if_not_null(item.address, "zipcode", d.zip_code !== "NULL" ? d.zip_code : null);
+        remove_if_null(item.address);
         remove_if_empty(item, "address")
 
-        add_if_not_null(item, "description", d.inscription.replaceAll("/", ""))
-        add_if_not_null(item, "material", d.material);
-        add_if_not_null(item, "type", d.artwork_type1);
-        add_if_not_null(item, "area", d.borough);
+        add_if_not_null(item, "description", d.inscription.replaceAll("/", "") !== "NULL" ? d.inscription.replaceAll("/", "") : null)
+        add_if_not_null(item, "material", d.material !== "NULL" ? d.material : null);
+        add_if_not_null(item, "type", d.artwork_type1 !== "NULL" ? d.artwork_type1 : null);
+        add_if_not_null(item, "area", d.borough) !== "NULL" ? d.borough : null;
 
         // other item.misc
         item.misc = {};
-        add_if_not_null(item.misc, "location", d.location_name);
-        add_if_not_null(item.misc, "managing_agency", d.managing_city_agency);
-        add_if_not_null(item.misc, "foundry", d.foundry);
+        add_if_not_null(item.misc, "location", d.location_name !== "NULL" ? d.location_name : null);
+        add_if_not_null(item.misc, "managing_agency", d.managing_city_agency !== "NULL" ? d.managing_city_agency : null);
+        add_if_not_null(item.misc, "foundry", d.foundry !== "NULL" ? d.foundry : null);
         item.misc = remove_if_null(item.misc);
 
         // check for and remove empty misc object

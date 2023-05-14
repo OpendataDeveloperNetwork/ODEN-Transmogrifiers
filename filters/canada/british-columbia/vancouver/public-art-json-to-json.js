@@ -9,7 +9,7 @@ const filter = function (data, params) {
     let remove_if_empty = params.library.get("remove_if_empty");
     let create_dates_template = params.library.get("create_dates_template");
     let remove_null_date_fields = params.library.get("remove_null_date_fields");
-  
+    
     // convert JSON data to object form
     if (typeof data === 'string' || data instanceof String) {
         data = JSON.parse(data);
@@ -18,7 +18,7 @@ const filter = function (data, params) {
     // define new data and errors array
     let new_data = [];
     let errors = [];
-  
+    
     // iterate through each data entry
     data.map(d => {
         let item = {};

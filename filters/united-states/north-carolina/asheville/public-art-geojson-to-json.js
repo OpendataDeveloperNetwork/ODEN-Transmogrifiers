@@ -39,7 +39,9 @@ const filter = function (data, params) {
         }
         item.coordinates = coordinates;
 
-        add_if_not_null(item, "artist", d.properties.artist);
+        if(d.properties.artist == "string" && d.properties.artist.trim().length !== 0){
+            add_if_not_null(item, "artist", d.properties.artist);
+        }
 
         item.dates = create_dates_template();
         let unix_timestamp = d.properties.edit_date
@@ -57,10 +59,12 @@ const filter = function (data, params) {
         add_if_not_null(item, "type", d.properties.type);
 
         item.image_urls = [];
-        image_urls = [d.properties.image];
-        for (let i = 0; i < image_urls.length; i++) {
-            if (image_urls[i] != null) {
-                item.image_urls.push(image_urls[i])
+        if(d.properties.image == "string" && d.properties.image.trim().length !== 0){
+            image_urls = [d.properties.image];
+            for (let i = 0; i < image_urls.length; i++) {
+                if (image_urls[i] != null) {
+                    item.image_urls.push(image_urls[i])
+                }
             }
         }
         remove_if_empty(item, "image_urls")

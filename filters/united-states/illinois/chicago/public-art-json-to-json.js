@@ -17,7 +17,6 @@ const filter = function (data, params) {
     let new_data = [];
     let errors = [];
 
-
     data.map(d => {
         let item = {};
         let skip = false;
@@ -37,8 +36,12 @@ const filter = function (data, params) {
         }
         item.coordinates = coordinates;
 
-        add_if_not_null(item, "artist", d.artist);
-        add_if_not_null(item, "owner", d.owner);
+        if(d.artist == "string" && d.artist.trim().length !== 0){
+            add_if_not_null(item, "artist", d.artist);
+        }
+        if(d.owner == "string" && d.owner.trim().length !== 0){
+            add_if_not_null(item, "owner", d.owner);
+        }
 
         // add misc sequentially
         item.misc = {}
@@ -56,7 +59,7 @@ const filter = function (data, params) {
         }
     })
 
-    return new_data;
+    return { data: new_data, errors: errors };
 }
 
 return filter;
