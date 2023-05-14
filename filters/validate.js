@@ -4,31 +4,26 @@ const filter = function (data, params) {
         throw "schema not found";
     }
 
-    // detect the schema type, and get the corresponding validator
+    // detect schema type and parse schema
     let schema;
     let validator;
     let schemaType;
     let validatorType;
     try {
-        console.log("PARSING SCHEMA");
         let json_schema = JSON.parse(params.schema);
         schema = json_schema;
         schemaType = "json";
-        console.log("SCHEMA: " + schema);
     } catch { };
 
+    // get validator for schema type
     switch (schemaType) {
         case "json": {
-            console.log("SELECTING VALIDATOR");
             if (params["jsonschema"]) {
                 validator = params["jsonschema"];
                 validatorType = "jsonschema";
             } else if (params["ajv"]) {
-                console.log("AJV");
-                console.log(params["ajv"]);
                 validator = params["ajv"].compile(schema);
                 validatorType = "ajv";
-                console.log("COMPILED SCHEMA");
             }
         }
     }
@@ -56,7 +51,6 @@ const filter = function (data, params) {
                         break;
                     }
                     case "ajv": {
-                        console.log("RUNNING AJV ON" + JSON.stringify(d, null));
                         let valid = validator(d);
                         if (!valid) {
                             data.errors.push({ type: "validate-json", validation_result: validator.errors, data_entry: d });
@@ -64,6 +58,9 @@ const filter = function (data, params) {
                             valid_data.push(d);
                         }
                         break;
+                    }
+                    default: {
+                        throw "validate: validator not supported"
                     }
                 }
                 break;
