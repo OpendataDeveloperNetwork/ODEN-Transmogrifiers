@@ -15,19 +15,23 @@ const filter = function (data, params) {
         schema = json_schema;
         schemaType = "json";
         console.log("SCHEMA: " + schema);
-
-        console.log("SELECTING VALIDATOR");
-        if (params["jsonschema"]) {
-            validator = params["jsonschema"];
-            validatorType = "jsonschema";
-        } else if (params["ajv"]) {
-            console.log("AJV");
-            console.log(params["ajv"]);
-            validator = params["ajv"].compile(schema);
-            validatorType = "ajv";
-            console.log("COMPILED SCHEMA");
-        }
     } catch { };
+
+    switch (schemaType) {
+        case "json": {
+            console.log("SELECTING VALIDATOR");
+            if (params["jsonschema"]) {
+                validator = params["jsonschema"];
+                validatorType = "jsonschema";
+            } else if (params["ajv"]) {
+                console.log("AJV");
+                console.log(params["ajv"]);
+                validator = params["ajv"].compile(schema);
+                validatorType = "ajv";
+                console.log("COMPILED SCHEMA");
+            }
+        }
+    }
 
     // check for unsupported schema type (!schema) or missing validator for schema type (!validator)
     if (!schema) {
