@@ -5,6 +5,9 @@ const filter = function (data, params) {
     data.data.map(d => {
         d['labels'] = params.labels;
     });
+    data.errors.map(e => {
+        e['labels'] = params.labels;
+    });
     return data;
 }
 return filter;
