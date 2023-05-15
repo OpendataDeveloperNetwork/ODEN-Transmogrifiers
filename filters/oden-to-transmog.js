@@ -14,9 +14,9 @@ const filter = function (data, params) {
     
     collector_filter = {func: collector_url};
     validate_filter = {func: validate_url, params: {validator: "json"}};
-    stringify_filter = {func: stringify_url, params: {indent: true}};
+    // stringify_filter = {func: stringify_url, params: {indent: true}};
     
-    schema_entry_obj.filters = [collector_filter, validate_filter, stringify_filter];
+    schema_entry_obj.filters = [collector_filter, validate_filter];
 
     // schema_entry_obj.sinks = [{func: "file_write", params: {path: "public-art-data.json"}}];
 
