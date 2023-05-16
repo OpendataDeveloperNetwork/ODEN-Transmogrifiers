@@ -26,7 +26,13 @@ const filter = function (data, params) {
     data.map((item) => {
         if (item.labels.category === category) {
             let skip = false;
-            schema_entry_obj.schema = item.data.schema;
+            
+            // schema
+            if (item.data.schema) {
+                schema_entry_obj.schema = item.data.schema;
+            } else {
+                skip = true;
+            }
 
             let entry_obj = {};
             
