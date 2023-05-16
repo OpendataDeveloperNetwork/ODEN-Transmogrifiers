@@ -50,6 +50,6 @@ const filter = function (data, params) {
             schema_entry_obj.entries.push(entry_obj);
         }
     })
-    return [schema_entry_obj];
+    return schema_entry_obj;
 }
 return filter;
