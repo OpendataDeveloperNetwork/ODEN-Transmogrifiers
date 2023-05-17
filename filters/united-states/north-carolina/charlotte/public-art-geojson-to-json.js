@@ -28,12 +28,12 @@ const filter = function (data, params) {
       skip = true;
     }
 
-    // add coordinates (required)
+    // add coordinates (required) (order is flipped for Charlotte, example: [longitude, latitude])
     let coordinates = {};
-    if (!add_required(coordinates, "longitude", d, d.geometry.coordinates[1], errors)) {
+    if (!add_required(coordinates, "latitude", d, d.geometry.coordinates[1], errors)) {
       skip = true;
     }
-    if (!add_required(coordinates, "latitude", d, d.geometry.coordinates[0], errors)) {
+    if (!add_required(coordinates, "longitude", d, d.geometry.coordinates[0], errors)) {
       skip = true;
     }
     item.coordinates = coordinates;
