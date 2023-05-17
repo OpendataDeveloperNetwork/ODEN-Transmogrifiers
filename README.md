@@ -2,7 +2,7 @@
 This repo contains the filters, standard library, and schema files to properly process public dataset json files retrieved from open data sets provided by municipalities.
 
 # Purpose
-ODEN Transmogrifiers is a tool that automates the process of data extraction and transformation. The Transmogrifier supports extracting data from diverse sources.
+ODEN Transmogrifiers provides the following (filters, schema, library and collector) for the transmogrifier (https://github.com/transmogrifier-io/transmogrifier/tree/main) to combine and use.
 
 # Features
 ODEN Transmogrifiers contains:
