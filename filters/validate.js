@@ -1,6 +1,6 @@
 const filter = function (data, params) {
-    console.log(data)
-    console.log(params)
+    console.log("data:", data)
+    console.log("params:", params)
     // check for schema
     if (!params.schema) {
         throw "schema not found";
