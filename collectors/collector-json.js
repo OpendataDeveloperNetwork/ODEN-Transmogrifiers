@@ -16,24 +16,8 @@ const collector_json = async function (datas, params) {
     let combined_data = [];
     let combined_errors = [];
 
-    // for each entry in the data go through valid entries and errors and add
-    // them to the combined arrays
-    // datas.map(d => {
-    //     if (d && d.data && Array.isArray(d.data)) {
-    //         d.data.map(valid_entry => {
-    //             combined_data.push(valid_entry);
-    //         });
-    //     }
-
-    //     if (d && d.errors && Array.isArray(d.errors)) {
-    //         d.errors.map(error => {
-    //             combined_errors.push(error);
-    //         });
-    //     }
-    // });
     for (let d of datas) {
         if (d && d.entries && Array.isArray(d.entries)) {
-            console.log("in if condition", d.entries)
             for (let valid_entry of d.entries) {
                 combined_data.push(valid_entry);
             }
