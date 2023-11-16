@@ -9,7 +9,6 @@ const collector_json = async function (datas, params) {
     for (let [i, data] of datas.entries()) {
         if (typeof data === 'string' || data instanceof String) {
             datas[i] = JSON.parse(data);
-            console.log("LOGGINGDATA", datas[i])
         }
     }
 
@@ -33,7 +32,8 @@ const collector_json = async function (datas, params) {
     //     }
     // });
     for (let d of datas) {
-        console.log('in secondary loop', d)
+        console.log(d.data)
+        console.log(Array.isArray(d.data))
         if (d && d.data && Array.isArray(d.data)) {
             console.log(d.data)
             for (let valid_entry of d.data) {
