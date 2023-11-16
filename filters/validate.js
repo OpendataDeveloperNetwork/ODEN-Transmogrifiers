@@ -36,7 +36,9 @@ const filter = function (data, params) {
         throw "validate: validator for schema type not found"
     }
     console.log("passed check")
+    console.log(data)
     console.log(typeof data.entries)
+    console.log(data.entries)
     let valid_data = [];
     
     data.entries.map(d => {
