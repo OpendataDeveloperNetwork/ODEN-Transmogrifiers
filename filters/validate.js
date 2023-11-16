@@ -36,8 +36,8 @@ const filter = function (data, params) {
         throw "validate: validator for schema type not found"
     }
     console.log("passed check")
-    console.log(data.entries)
-    console.log(data[0].entries)
+    console.log("outside",data.entries)
+    console.log("indexed", data[0].entries)
     let valid_data = [];
     let entriesToValidate = data.entries;
 
