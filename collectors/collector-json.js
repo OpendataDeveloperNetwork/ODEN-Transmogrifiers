@@ -1,4 +1,4 @@
-const collector_json = function (datas, params) {
+const collector_json = async function (datas, params) {
     // convert JSON data string to object form
 
     for (let [i, data] of datas.entries()) {
