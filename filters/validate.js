@@ -37,7 +37,8 @@ const filter = function (data, params) {
     }
     console.log("passed check")
     let valid_data = [];
-    data.data.map(d => {
+    
+    data.entries.map(d => {
         switch (schemaType) {
             case "json": {
                 switch (validatorType) {
