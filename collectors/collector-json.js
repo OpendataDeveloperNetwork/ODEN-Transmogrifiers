@@ -1,6 +1,6 @@
 const collector_json = async function (datas, params) {
     // convert JSON data string to object form
-
+    console.log(datas)
     for (let [i, data] of datas.entries()) {
         if (typeof data === 'string' || data instanceof String) {
             datas[i] = JSON.parse(data);
