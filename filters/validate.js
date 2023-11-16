@@ -42,7 +42,7 @@ const filter = function (data, params) {
     // Check if entriesToValidate is an array
     for (let d in data) {
         let entriesToValidate = d.entries;
-        console.log(Array.isArray(entriesToValidate)
+        console.log(Array.isArray(entriesToValidate))
         if (entriesToValidate && Array.isArray(entriesToValidate)) {
             for (let entry of entriesToValidate) {
                 console.log("ENTRY", entry)
