@@ -32,9 +32,7 @@ const collector_json = async function (datas, params) {
     //     }
     // });
     for (let d of datas) {
-        console.log("d.entries", d.entries)
-        console.log("check if array", Array.isArray(d.entries))
-        if (d && d.data && Array.isArray(d.entries)) {
+        if (d && d.entries && Array.isArray(d.entries)) {
             console.log("in if condition", d.entries)
             for (let valid_entry of d.entries) {
                 combined_data.push(valid_entry);
