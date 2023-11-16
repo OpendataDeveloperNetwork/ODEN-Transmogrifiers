@@ -35,17 +35,17 @@ const filter = function (data, params) {
     if (!validator) {
         throw "validate: validator for schema type not found"
     }
-    console.log("passed check")
-    console.log("outside",data.entries)
-    console.log("indexed", data[0].entries)
+
     let valid_data = [];
     let entriesToValidate = data.entries;
 
     // Check if entriesToValidate is an array
     for (let d in data) {
         let entriesToValidate = d.entries;
+        console.log(Array.isArray(entriesToValidate)
         if (entriesToValidate && Array.isArray(entriesToValidate)) {
             for (let entry of entriesToValidate) {
+                console.log("ENTRY", entry)
                 switch (schemaType) {
                     case "json": {
                         switch (validatorType) {
