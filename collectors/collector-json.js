@@ -33,7 +33,9 @@ const collector_json = async function (datas, params) {
     //     }
     // });
     for (let d of datas) {
+        console.log('in secondary loop', d)
         if (d && d.data && Array.isArray(d.data)) {
+            console.log(d.data)
             for (let valid_entry of d.data) {
                 combined_data.push(valid_entry);
             }
