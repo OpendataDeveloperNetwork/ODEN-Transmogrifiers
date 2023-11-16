@@ -1,5 +1,5 @@
 const collector_json = async function (datas, params) {
-    console.log(datas
+    console.log(datas)
     if (!datas) {
             // Handle the case where datas is not defined or not an array
             console.error("Invalid or undefined datas:", datas);
