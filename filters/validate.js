@@ -13,7 +13,7 @@ const filter = function (data, params) {
         let json_schema = JSON.parse(params.schema);
         schema = json_schema;
         schemaType = "json";
-    } catch { };
+    } catch { }
 
     // get validator for schema type
     switch (schemaType) {
@@ -43,7 +43,7 @@ const filter = function (data, params) {
     let entriesToValidate = data.entries;
 
     // Check if entriesToValidate is an array
-    for (d in data){
+    for (let d in data) {
         let entriesToValidate = d.entries;
         if (entriesToValidate && Array.isArray(entriesToValidate)) {
             for (let d of entriesToValidate) {
@@ -83,8 +83,9 @@ const filter = function (data, params) {
             console.error("Invalid or missing 'entries' property in data:", data);
             // Handle the case where 'entries' is not an array
         }
+    }
 
-    
+
     // data.entries.map(d => {
     //     switch (schemaType) {
     //         case "json": {
