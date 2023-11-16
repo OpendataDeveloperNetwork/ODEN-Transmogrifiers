@@ -51,6 +51,7 @@ const filter = function (data, params) {
                         switch (validatorType) {
                             case "jsonschema": {
                                 let result = validator.validate(d, schema, { required: true });
+                                console.log(result)
                                 if (!result.valid) {
                                     data.errors.push({ type: "validate-json", validation_result: result, data_entry: d });
                                 } else {
