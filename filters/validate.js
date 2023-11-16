@@ -36,9 +36,8 @@ const filter = function (data, params) {
         throw "validate: validator for schema type not found"
     }
     console.log("passed check")
-    console.log(data)
-    console.log(typeof data.entries)
     console.log(data.entries)
+    console.log(data[0].entries)
     let valid_data = [];
     let entriesToValidate = data.entries;
 
@@ -46,7 +45,7 @@ const filter = function (data, params) {
     for (let d in data) {
         let entriesToValidate = d.entries;
         if (entriesToValidate && Array.isArray(entriesToValidate)) {
-            for (let d of entriesToValidate) {
+            for (let entry of entriesToValidate) {
                 switch (schemaType) {
                     case "json": {
                         switch (validatorType) {
