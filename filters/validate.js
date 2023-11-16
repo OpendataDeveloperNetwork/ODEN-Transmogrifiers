@@ -38,89 +38,42 @@ const filter = function (data, params) {
 
     let valid_data = [];
     let entriesToValidate = data.entries;
+    console.log("ALL data", data)
+    console.log("Index data", data[0])
 
-    // Check if entriesToValidate is an array
-    for (let d in data) {
-        console.log(d)
-        let entriesToValidate = d.entries;
-        console.log(entriesToValidate)
-        console.log(Array.isArray(entriesToValidate))
-        if (entriesToValidate && Array.isArray(entriesToValidate)) {
-            for (let entry of entriesToValidate) {
-                console.log("ENTRY", entry)
-                switch (schemaType) {
-                    case "json": {
-                        switch (validatorType) {
-                            case "jsonschema": {
-                                let result = validator.validate(d, schema, { required: true });
-                                console.log(result)
-                                if (!result.valid) {
-                                    data.errors.push({ type: "validate-json", validation_result: result, data_entry: d });
-                                } else {
-                                    valid_data.push(d);
-                                }
-                                break;
-                            }
-                            case "ajv": {
-                                let valid = validator(d);
-                                if (!valid) {
-                                    data.errors.push({ type: "validate-json", validation_result: validator.errors, data_entry: d });
-                                } else {
-                                    valid_data.push(d);
-                                }
-                                break;
-                            }
-                            default: {
-                                throw "validate: validator not supported";
-                            }
+    data[0].entries.map(d => {
+        switch (schemaType) {
+            case "json": {
+                switch (validatorType) {
+                    case "jsonschema": {
+                        let result = validator.validate(d, schema, { required: true });
+                        if (!result.valid) {
+                            data.errors.push({ type: "validate-json", validation_result: result, data_entry: d });
+                        } else {
+                            valid_data.push(d);
+                        }
+                        break;
+                    }
+                    case "ajv": {
+                        let valid = validator(d);
+                        if (!valid) {
+                            data.errors.push({ type: "validate-json", validation_result: validator.errors, data_entry: d });
+                        } else {
+                            valid_data.push(d);
                         }
                         break;
                     }
                     default: {
-                        throw "validate: data type not supported";
+                        throw "validate: validator not supported"
                     }
                 }
+                break;
             }
-        } else {
-            console.error("Invalid or missing 'entries' property in data:", data);
-            // Handle the case where 'entries' is not an array
+            default: {
+                throw "validate: data type not supported";
+            }
         }
-    }
-
-
-    // data.entries.map(d => {
-    //     switch (schemaType) {
-    //         case "json": {
-    //             switch (validatorType) {
-    //                 case "jsonschema": {
-    //                     let result = validator.validate(d, schema, { required: true });
-    //                     if (!result.valid) {
-    //                         data.errors.push({ type: "validate-json", validation_result: result, data_entry: d });
-    //                     } else {
-    //                         valid_data.push(d);
-    //                     }
-    //                     break;
-    //                 }
-    //                 case "ajv": {
-    //                     let valid = validator(d);
-    //                     if (!valid) {
-    //                         data.errors.push({ type: "validate-json", validation_result: validator.errors, data_entry: d });
-    //                     } else {
-    //                         valid_data.push(d);
-    //                     }
-    //                     break;
-    //                 }
-    //                 default: {
-    //                     throw "validate: validator not supported"
-    //                 }
-    //             }
-    //             break;
-    //         }
-    //         default: {
-    //             throw "validate: data type not supported";
-    //         }
-    //     }
-    // })
+    })
     return { data: valid_data, errors: data.errors };
 }
 return filter;
