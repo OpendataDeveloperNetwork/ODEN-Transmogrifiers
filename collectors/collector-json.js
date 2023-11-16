@@ -10,7 +10,7 @@ const collector_json = async function (datas, params) {
         console.log(data)
         if (typeof data === 'string' || data instanceof String) {
             datas[i] = JSON.parse(data);
-            console.log(datas[i])
+            console.log("LOGGINGDATA", datas[i])
         }
     }
 
