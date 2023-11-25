@@ -1,9 +1,11 @@
 const filter = function (data, params) {
     // check for standard library and pull out required functions
+    console.log(typeof(params))
     console.log("LIBRARY");
     console.log(params.library);
     console.log("PARAMS PRINTING HERE---------------");
     console.log(JSON.stringify(params));
+    console.log(JSON.parse(params));
     if (!params.library) {
         throw "ODEN library not provided";
     }
