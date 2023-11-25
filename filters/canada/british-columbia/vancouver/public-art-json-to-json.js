@@ -6,7 +6,7 @@ const filter = function (data, params) {
     console.log("PARAMS PRINTING HERE---------------");
     console.log(JSON.stringify(params));
     params = JSON.parse(params);
-    console.log(typeof(params));
+    console.log("type of params after parsing:", typeof(params));
     if (!params.library) {
         throw "ODEN library not provided";
     }
