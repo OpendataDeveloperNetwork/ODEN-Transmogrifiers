@@ -3,6 +3,8 @@ const filter = function (data, params) {
     console.log(typeof(params))
     console.log("LIBRARY");
     console.log(params.library);
+    console.log("LIBRARY AS STRING");
+    console.log(params["library"]);
     console.log("PARAMS PRINTING HERE---------------");
     console.log(JSON.stringify(params));
     params = JSON.parse(params);
