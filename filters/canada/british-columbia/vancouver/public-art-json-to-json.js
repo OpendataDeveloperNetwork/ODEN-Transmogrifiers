@@ -1,6 +1,6 @@
 const filter = function (data, params) {
     // check for standard library and pull out required functions
-    console.log(params);
+    console.log(params.library);
     if (!params.library) {
         throw "ODEN library not provided";
     }
