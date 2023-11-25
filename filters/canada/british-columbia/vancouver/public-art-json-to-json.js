@@ -14,6 +14,9 @@ const filter = function (data, params) {
     if (!params.library) {
         throw "ODEN library not provided";
     }
+    console.log("made it here");
+    console.log(params.library);
+    console.log(params.library.get("add_required"));
     let add_required = params.library.get("add_required");
     let add_if_not_null = params.library.get("add_if_not_null")
     let remove_if_null = params.library.get("remove_if_null");
